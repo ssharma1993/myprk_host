@@ -1,6 +1,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { useRoute } from '@/lib/route';
-import { Head, router, useForm } from '@inertiajs/react';
+import type { SharedData } from '@/types';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 
 interface Subscriber {
     id: number;
@@ -22,6 +23,8 @@ interface IndexProps {
 
 export default function Index({ subscribers, stats }: IndexProps) {
     const route = useRoute();
+    const { flash } = usePage<SharedData>().props;
+    const newsletterStatus = flash?.newsletterStatus;
     const { data, setData, post, processing, errors, reset } = useForm({
         subject: '',
         content: '',
@@ -87,6 +90,36 @@ export default function Index({ subscribers, stats }: IndexProps) {
                         <p className="mt-1 text-sm text-gray-600">
                             This will send to all active subscribers.
                         </p>
+
+                        {flash?.success && (
+                            <div className="mt-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                                {flash.success}
+                            </div>
+                        )}
+
+                        {flash?.warning && (
+                            <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                                {flash.warning}
+                            </div>
+                        )}
+
+                        {newsletterStatus && (
+                            <div className="mt-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800">
+                                <p>
+                                    Send status: {newsletterStatus.sent}/
+                                    {newsletterStatus.total} sent,{' '}
+                                    {newsletterStatus.failed} failed.
+                                </p>
+                                {newsletterStatus.failed > 0 && (
+                                    <p className="mt-1 text-xs break-all text-gray-600">
+                                        Failed emails:{' '}
+                                        {newsletterStatus.failed_emails.join(
+                                            ', ',
+                                        )}
+                                    </p>
+                                )}
+                            </div>
+                        )}
 
                         <form onSubmit={submit} className="mt-6 space-y-4">
                             <div>

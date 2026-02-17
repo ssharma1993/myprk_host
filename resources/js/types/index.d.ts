@@ -26,6 +26,17 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    flash?: {
+        success?: string | null;
+        warning?: string | null;
+        error?: string | null;
+        newsletterStatus?: {
+            total: number;
+            sent: number;
+            failed: number;
+            failed_emails: string[];
+        } | null;
+    };
     sidebarOpen: boolean;
     [key: string]: unknown;
 }

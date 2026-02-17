@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Throwable;
 
 class NewsletterController extends Controller
 {
@@ -26,10 +27,12 @@ class NewsletterController extends Controller
     public function subscribe(Request $request)
     {
         $data = $request->validate([
-            'email' => 'required|email:rfc,dns|max:255',
+            'email' => 'required|string|email|max:255',
         ]);
 
-        $subscriber = NewsletterSubscriber::where('email', $data['email'])->first();
+        $email = strtolower(trim($data['email']));
+
+        $subscriber = NewsletterSubscriber::where('email', $email)->first();
         $token = Str::uuid()->toString();
 
         if ($subscriber) {
@@ -39,7 +42,7 @@ class NewsletterController extends Controller
             ]);
         } else {
             NewsletterSubscriber::create([
-                'email' => $data['email'],
+                'email' => $email,
                 'unsubscribe_token' => $token,
                 'is_active' => true,
             ]);
@@ -69,17 +72,57 @@ class NewsletterController extends Controller
 
         $subscribers = NewsletterSubscriber::where('is_active', true)->get();
 
+        if ($subscribers->isEmpty()) {
+            return redirect()->route('newsletter.index')
+                ->with('warning', 'No active subscribers found.')
+                ->with('newsletter_status', [
+                    'total' => 0,
+                    'sent' => 0,
+                    'failed' => 0,
+                    'failed_emails' => [],
+                ]);
+        }
+
+        $sentCount = 0;
+        $failedEmails = [];
+
         foreach ($subscribers as $subscriber) {
-            Mail::send('emails.newsletter', [
-                'content' => $data['content'],
-                'subscriber' => $subscriber,
-            ], function ($message) use ($subscriber, $data) {
-                $message->to($subscriber->email)->subject($data['subject']);
-            });
+            try {
+                Mail::send('emails.newsletter', [
+                    'content' => $data['content'],
+                    'subscriber' => $subscriber,
+                ], function ($message) use ($subscriber, $data) {
+                    $message->to($subscriber->email)->subject($data['subject']);
+                });
+
+                $sentCount++;
+            } catch (Throwable $e) {
+                $failedEmails[] = $subscriber->email;
+            }
+        }
+
+        $failedCount = count($failedEmails);
+        $totalCount = $subscribers->count();
+
+        if ($failedCount === 0) {
+            return redirect()->route('newsletter.index')
+                ->with('success', 'Email sent successfully to all ' . $sentCount . ' subscribers.')
+                ->with('newsletter_status', [
+                    'total' => $totalCount,
+                    'sent' => $sentCount,
+                    'failed' => 0,
+                    'failed_emails' => [],
+                ]);
         }
 
         return redirect()->route('newsletter.index')
-            ->with('success', 'Email sent to ' . $subscribers->count() . ' subscribers.');
+            ->with('warning', 'Email sent to ' . $sentCount . ' of ' . $totalCount . ' subscribers. ' . $failedCount . ' failed.')
+            ->with('newsletter_status', [
+                'total' => $totalCount,
+                'sent' => $sentCount,
+                'failed' => $failedCount,
+                'failed_emails' => $failedEmails,
+            ]);
     }
 
     public function preview(Request $request)
