@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f093fb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f5576c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bgGradient2)"/>
+  
+  <!-- Professional person illustration -->
+  <!-- Head -->
+  <circle cx="200" cy="70" r="25" fill="#fff"/>
+  
+  <!-- Suit/Professional attire -->
+  <path d="M 175 100 L 170 120 Q 170 140 175 160 L 225 160 Q 230 140 230 120 L 225 100 Z" fill="#2c3e50"/>
+  <path d="M 175 100 L 200 110 L 225 100 Z" fill="#34495e"/>
+  
+  <!-- Tie -->
+  <polygon points="200,100 195,130 205,130" fill="#e74c3c"/>
+  
+  <!-- Arms -->
+  <line x1="175" y1="110" x2="120" y2="140" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+  <line x1="225" y1="110" x2="280" y2="140" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+  
+  <!-- Briefcase in left hand -->
+  <rect x="100" y="135" width="40" height="35" fill="#2c3e50" rx="2"/>
+  <rect x="100" y="135" width="40" height="5" fill="#34495e"/>
+  <line x1="120" y1="135" x2="120" y2="170" stroke="#34495e" stroke-width="2"/>
+  
+  <!-- Worker/Skilled badge -->
+  <circle cx="320" cy="80" r="40" fill="#27ae60"/>
+  <text x="320" y="70" font-size="14" font-weight="bold" fill="white" text-anchor="middle">TOP</text>
+  <text x="320" y="85" font-size="14" font-weight="bold" fill="white" text-anchor="middle">SKILLED</text>
+  <text x="320" y="100" font-size="14" font-weight="bold" fill="white" text-anchor="middle">WORKER</text>
+  
+  <!-- Skill levels/bars -->
+  <text x="200" y="210" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Skills Assessment: PASSED</text>
+  
+  <rect x="80" y="230" width="240" height="8" fill="rgba(255,255,255,0.3)" rx="4"/>
+  <rect x="80" y="230" width="216" height="8" fill="#27ae60" rx="4"/>
+  <text x="200" y="265" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Skilled Migration Program</text>
+</svg>

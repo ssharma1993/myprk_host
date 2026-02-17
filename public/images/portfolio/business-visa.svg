@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bgGradient3)"/>
+  
+  <!-- Building/Business -->
+  <g>
+    <!-- Main building -->
+    <rect x="100" y="120" width="100" height="110" fill="#2c3e50"/>
+    
+    <!-- Windows -->
+    <rect x="110" y="130" width="20" height="20" fill="#f39c12"/>
+    <rect x="140" y="130" width="20" height="20" fill="#f39c12"/>
+    <rect x="170" y="130" width="20" height="20" fill="#f39c12"/>
+    
+    <rect x="110" y="160" width="20" height="20" fill="#f39c12"/>
+    <rect x="140" y="160" width="20" height="20" fill="#f39c12"/>
+    <rect x="170" y="160" width="20" height="20" fill="#f39c12"/>
+    
+    <rect x="110" y="190" width="20" height="20" fill="#2c3e50"/>
+    <rect x="140" y="190" width="20" height="20" fill="#2c3e50"/>
+    <rect x="170" y="190" width="20" height="20" fill="#2c3e50"/>
+    
+    <!-- Door -->
+    <rect x="135" y="210" width="30" height="25" fill="#34495e"/>
+    <circle cx="162" cy="222" r="2" fill="#f39c12"/>
+  </g>
+  
+  <!-- Globe -->
+  <circle cx="280" cy="100" r="35" fill="none" stroke="#fff" stroke-width="2"/>
+  <circle cx="280" cy="100" r="35" fill="#27ae60" opacity="0.3"/>
+  <!-- Continents simple -->
+  <ellipse cx="265" cy="90" rx="8" ry="6" fill="#fff"/>
+  <ellipse cx="290" cy="115" rx="10" ry="7" fill="#fff"/>
+  
+  <!-- Arrows showing growth/expansion -->
+  <g stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="250,180 280,150 310,180"/>
+  </g>
+  
+  <!-- Handshake symbolizing business deal -->
+  <g fill="#fff">
+    <ellipse cx="180" cy="250" rx="25" ry="12" transform="rotate(-20 180 250)"/>
+    <ellipse cx="220" cy="250" rx="25" ry="12" transform="rotate(20 220 250)"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="200" y="285" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Business Visa Consulting</text>
+</svg>
