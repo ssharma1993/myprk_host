@@ -20,9 +20,12 @@ class Sponsor extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'display_order' => 'integer',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'display_order' => 'integer',
+        ];
+    }
 }

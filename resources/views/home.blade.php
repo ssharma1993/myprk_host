@@ -237,16 +237,16 @@
             <div class="col-lg-6" data-aos="fade-right" data-aos-anchor-placement="top-bottom" data-aos-duration="1300">
                 <div class="about-two__image">
                     <div class="about-two__image__one">
-                        <img src="assets/images/about/about-2-1.jpg" alt="about">
+                        <img src="assets/images/about/founder1.jpeg" alt="about">
                     </div><!-- /.about-two__image__one -->
                     <div class="about-two__experience">
-                        <h2 class="about-two__experience__year">36+</h2>
-                        <h3 class="about-two__experience__title">Experience Challenge</h3>
+                        <!-- <h2 class="about-two__experience__year">3+</h2> -->
+                        <!-- <h3 class="about-two__experience__title">Experience Challenge</h3> -->
                     </div><!-- /.about-two__experience -->
                     <div class="about-two__image__two">
-                        <img src="assets/images/about/about-2-2.jpg" alt="about">
+                        <!-- <img src="assets/images/about/founder1.png" alt="about"> -->
                     </div><!-- /.about-two__image__two -->
-                    <img src="assets/images/shapes/about-shape-2-2.png" alt="shape" class="about-two__image__shape">
+                    <!-- <img src="assets/images/shapes/about-shape-2-2.png" alt="shape" class="about-two__image__shape"> -->
                 </div><!-- /.about-two__image -->
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
@@ -255,63 +255,75 @@
                         <div class="sec-title__top" data-aos="fade-right" data-aos-anchor-placement="top-bottom"
                             data-aos-duration="1500">
                             <span class="sec-title__icon sec-title__icon--left"><i class="icon-airplane"></i></span>
-                            <p class="sec-title__tagline">Our About Company</p>
+                            <p class="sec-title__tagline">About Us</p>
                         </div><!-- /.sec-title__top -->
-                        <h2 class="sec-title__title bw-split-in-right">Canada's Leading Immigration
-                            Consulting Partner.</h2><!-- /.sec-title__title -->
+                        <h2 class="sec-title__title bw-split-in-right">Founder & Principal Consultant, PRK Immigration
+                            Consultancy</h2><!-- /.sec-title__title -->
                     </div><!-- /.sec-title -->
-                    <p class="about-two__text" data-aos="fade-left" data-aos-anchor-placement="top-bottom"
-                        data-aos-duration="1300">PRK Immigration specializes in helping individuals and families
-                        navigate the Canadian immigration process. With over a decade of expertise, we've successfully
-                        guided thousands of clients to their Canadian dreams through personalized consulting and
-                        comprehensive support.</p>
-                    <div class="about-two__feature">
-                        <div class="row gutter-y-30">
-                            <div class="col-xl-6 col-lg-12 col-md-6" data-aos="fade-up"
-                                data-aos-anchor-placement="top-bottom" data-aos-duration="1300" data-aos-delay="100">
-                                <div class="about-two__feature__item">
-                                    <span class="about-two__feature__icon"><i class="icon-passport"></i></span>
-                                    <div class="about-two__feature__content">
-                                        <h3 class="about-two__feature__title">Immigration Visa Resources</h3>
-                                    </div><!-- /.about-two__feature__content -->
-                                </div><!-- /.about-two__feature__item -->
-                            </div><!-- /.col-xl-6 -->
-                            <div class="col-xl-6 col-lg-12 col-md-6" data-aos="fade-up"
-                                data-aos-anchor-placement="top-bottom" data-aos-duration="1300" data-aos-delay="200">
-                                <div class="about-two__feature__item">
-                                    <span class="about-two__feature__icon"><i class="icon-brainstorming"></i></span>
-                                    <div class="about-two__feature__content">
-                                        <h3 class="about-two__feature__title">Best Consultancy Agency</h3>
-                                    </div><!-- /.about-two__feature__content -->
-                                </div><!-- /.about-two__feature__item -->
-                            </div><!-- /.col-xl-6 -->
-                        </div><!-- /.row -->
-                    </div><!-- /.about-two__feature -->
-                    <p class="about-two__text about-two__text--2" data-aos="fade-up"
-                        data-aos-anchor-placement="top-bottom" data-aos-duration="1300"><span>Our Expertise:</span>
-                        Express Entry, Family Sponsorship, Work Permits, Study Permits, <br> Business Immigration &
-                        Permanent Residency</p><!-- /.about-two__text -->
-                    <ul class="about-two__list list-unstyled" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
+                    <div class="about-two__text" data-aos="fade-left" data-aos-anchor-placement="top-bottom"
                         data-aos-duration="1300">
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M15.7639 9.62873V16.5338C15.7639 16.7813 15.5609 16.982 15.3119 16.982H2.18281C1.93324 16.982 1.73078 16.7813 1.73078 16.5338V3.42709C1.73078 3.18025 1.93324 2.97892 2.18281 2.97892H10.4468L11.4481 2.22986H2.22102C1.53438 2.22986 0.976562 2.78455 0.976562 3.46591V16.495C0.976562 17.1764 1.53438 17.7311 2.22102 17.7311H15.2737C15.9597 17.7311 16.5181 17.1764 16.5181 16.495V8.62595L15.7639 9.62873Z" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M16.6438 2.22958C16.416 2.34118 16.1881 2.45286 15.9603 2.56446C15.4867 2.85216 15.0344 3.20982 14.6196 3.56915C12.9789 4.99064 11.9624 5.97829 10.659 7.75353C10.2198 8.35169 9.72596 8.89993 9.30514 9.52568C9.18686 9.6838 9.06854 9.842 8.95026 10.0001C8.93272 10.0048 8.91522 10.0094 8.89768 10.0141H8.88452C8.57011 8.94478 8.09944 7.87021 7.24155 7.37673C6.61667 7.01732 5.4696 7.59693 5.28311 8.06048C5.07198 8.58536 5.77936 9.51626 5.95346 9.8745C6.23221 10.4481 6.47292 11.0618 6.70268 11.6746C6.82671 12.0054 6.90557 12.5556 7.14956 12.763C7.39096 12.9682 7.71952 13.0004 8.06964 13.0979C8.37706 13.1834 8.95085 13.3262 9.26573 13.1397C9.62843 12.9249 10.2311 11.884 10.4881 11.4792C11.1529 10.4324 11.9582 9.50368 12.6831 8.52095C13.157 7.87853 13.8745 7.10021 14.4576 6.56735C15.3522 5.7497 15.4949 5.49044 16.4466 4.72732C16.9548 4.34126 17.4631 3.95513 17.9713 3.56911C18.2648 3.38771 18.5584 3.2063 18.8519 3.02489C18.932 2.95857 18.9472 2.82614 19.0228 2.75978C19.0036 2.2229 17.2724 2.21642 16.6438 2.22958Z" />
-                            </svg>
-                            Private offices or meeting rooms Solution.
-                        </li>
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M15.7639 9.62873V16.5338C15.7639 16.7813 15.5609 16.982 15.3119 16.982H2.18281C1.93324 16.982 1.73078 16.7813 1.73078 16.5338V3.42709C1.73078 3.18025 1.93324 2.97892 2.18281 2.97892H10.4468L11.4481 2.22986H2.22102C1.53438 2.22986 0.976562 2.78455 0.976562 3.46591V16.495C0.976562 17.1764 1.53438 17.7311 2.22102 17.7311H15.2737C15.9597 17.7311 16.5181 17.1764 16.5181 16.495V8.62595L15.7639 9.62873Z" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M16.6438 2.22958C16.416 2.34118 16.1881 2.45286 15.9603 2.56446C15.4867 2.85216 15.0344 3.20982 14.6196 3.56915C12.9789 4.99064 11.9624 5.97829 10.659 7.75353C10.2198 8.35169 9.72596 8.89993 9.30514 9.52568C9.18686 9.6838 9.06854 9.842 8.95026 10.0001C8.93272 10.0048 8.91522 10.0094 8.89768 10.0141H8.88452C8.57011 8.94478 8.09944 7.87021 7.24155 7.37673C6.61667 7.01732 5.4696 7.59693 5.28311 8.06048C5.07198 8.58536 5.77936 9.51626 5.95346 9.8745C6.23221 10.4481 6.47292 11.0618 6.70268 11.6746C6.82671 12.0054 6.90557 12.5556 7.14956 12.763C7.39096 12.9682 7.71952 13.0004 8.06964 13.0979C8.37706 13.1834 8.95085 13.3262 9.26573 13.1397C9.62843 12.9249 10.2311 11.884 10.4881 11.4792C11.1529 10.4324 11.9582 9.50368 12.6831 8.52095C13.157 7.87853 13.8745 7.10021 14.4576 6.56735C15.3522 5.7497 15.4949 5.49044 16.4466 4.72732C16.9548 4.34126 17.4631 3.95513 17.9713 3.56911C18.2648 3.38771 18.5584 3.2063 18.8519 3.02489C18.932 2.95857 18.9472 2.82614 19.0228 2.75978C19.0036 2.2229 17.2724 2.21642 16.6438 2.22958Z" />
-                            </svg>
-                            Enclosed spaces for individuals or teams.
-                        </li>
-                    </ul><!-- /.about-two__list -->
+                        <p>
+                            My journey to Canada was not simple. It was filled with uncertainty, obstacles, and moments
+                            where I had to make life-changing decisions with very little clarity. From the very
+                            beginning —
+                            when I first consulted an agent in India about coming to Canada — to navigating my own
+                            permanent
+                            residence application, I experienced firsthand how complex and emotionally demanding the
+                            immigration process can be.
+                        </p>
+
+                        <p>
+                            There were hiccups. There were hurdles. There were times when the path forward wasn’t clear,
+                            and
+                            I had to research, strategize, and determine the best way ahead on my own.
+                        </p>
+
+                        <p>Through that experience, I learned something powerful.</p>
+
+                        <p>
+                            Many people invest significant money in immigration services, yet very few receive the
+                            honest
+                            guidance, transparency, and strategic advice they truly deserve. Too often, applicants are
+                            given
+                            only one option instead of being educated about all possible pathways. Too often, they are
+                            treated like a file number instead of individuals and families with dreams.
+                        </p>
+
+                        <p>That realization became my mission.</p>
+
+                        <p>
+                            I am <strong>Purnima Wahi, Founder and Principal Consultant at PRK Immigration
+                                Consultancy</strong>,
+                            and I built this firm with one clear purpose: to be a competent, ethical, and regulated
+                            consultant who
+                            genuinely puts clients first.
+                        </p>
+
+                        <p><strong>My approach is different:</strong></p>
+                        <ul>
+                            <li>I carefully assess each client’s unique background.</li>
+                            <li>I present multiple viable options wherever possible.</li>
+                            <li>I clearly explain the pros, cons, timelines, risks, and benefits of each pathway.</li>
+                            <li>I empower my clients with knowledge so they can confidently choose what is best for
+                                them.</li>
+                            <li>I ensure that the value of my service reflects the trust and investment my clients place
+                                in me.</li>
+                        </ul>
+
+                        <p>
+                            Immigration is more than paperwork — it’s your future, your family, and your dreams. Having
+                            experienced the challenges myself, I understand the emotions and uncertainties involved. At
+                            PRK
+                            Immigration Consultancy, we are committed to guiding you every step of the way — helping you
+                            <em>navigate, settle, and thrive</em> with confidence in Canada.
+                        </p>
+
+                        <p>
+                            At PRK Immigration Consultancy, you are not just another application.
+                            You are a person with goals — and I am here to help you achieve them the right way.
+                        </p>
+                    </div>
+
                     <div class="about-two__button" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
                         data-aos-duration="1300">
                         <a href="{{ route('about') }}" class="visanet-btn">
@@ -572,8 +584,7 @@
             }'>
             @forelse($sponsors as $sponsor)
             <div class="client-carousel__item">
-                <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->name }}"
-                    class="client-carousel__image">
+                <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->name }}" class="client-carousel__image">
                 <div class="client-carousel__hover">
                     <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->name }}"
                         class="client-carousel__hover__image">

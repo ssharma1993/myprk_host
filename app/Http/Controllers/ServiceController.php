@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class ServiceController extends Controller
@@ -13,12 +14,20 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::orderBy('display_order', 'asc')
+        $services = Service::with('children')
+            ->whereNull('parent_id')
+            ->orderBy('display_order', 'asc')
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $parentServices = Service::whereNull('parent_id')
+            ->orderBy('display_order', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get(['id', 'name']);
+
         return Inertia::render('services', [
             'services' => $services,
+            'parentServices' => $parentServices,
         ]);
     }
 
@@ -28,6 +37,11 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'parent_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('services', 'id')->where(fn($query) => $query->whereNull('parent_id')),
+            ],
             'name' => 'required|string|max:255',
             'icon' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255|unique:services',
@@ -47,6 +61,12 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service)
     {
         $data = $request->validate([
+            'parent_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('services', 'id')->where(fn($query) => $query->whereNull('parent_id')),
+                Rule::notIn([$service->id]),
+            ],
             'name' => 'required|string|max:255',
             'icon' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255|unique:services,slug,' . $service->id,
@@ -54,6 +74,12 @@ class ServiceController extends Controller
             'page_content' => 'nullable|string',
             'display_order' => 'nullable|integer|min:0',
         ]);
+
+        if (! empty($data['parent_id']) && $service->children()->exists()) {
+            return response()->json([
+                'message' => 'A parent service with sub services cannot be assigned under another parent.',
+            ], 422);
+        }
 
         $service->update($data);
 
@@ -75,7 +101,9 @@ class ServiceController extends Controller
      */
     public function getAll()
     {
-        $services = Service::orderBy('display_order', 'asc')
+        $services = Service::with('children')
+            ->whereNull('parent_id')
+            ->orderBy('display_order', 'asc')
             ->get();
 
         return response()->json($services);
@@ -86,7 +114,7 @@ class ServiceController extends Controller
      */
     public function getById($id)
     {
-        $service = Service::findOrFail($id);
+        $service = Service::with(['parent', 'children'])->findOrFail($id);
 
         return response()->json($service);
     }

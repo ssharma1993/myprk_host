@@ -3,90 +3,50 @@
 namespace App\Http\Controllers;
 
 use Endroid\QrCode\QrCode;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Writer\SvgWriter;
+use Endroid\QrCode\Writer\GifWriter;
+use Endroid\QrCode\Writer\WebPWriter;
+use Endroid\QrCode\ErrorCorrectionLevel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class QRCodeController extends Controller
 {
     private function getWriter($format)
     {
-        switch ($format) {
-            case 'svg':
-                return new SvgWriter();
-            case 'png':
-            case 'jpeg':
-            case 'gif':
-            case 'webp':
-                return new PngWriter();
-            default:
-                throw new \InvalidArgumentException('Unsupported format');
-        }
+        return match ($format) {
+            'svg' => new SvgWriter(),
+            'png' => new PngWriter(),
+            'jpeg' => new PngWriter(), // Use PNG as source for JPEG conversion
+            'gif' => new GifWriter(),
+            'webp' => new WebPWriter(),
+            default => throw new \InvalidArgumentException('Unsupported format'),
+        };
     }
 
     private function getMimeType($format)
     {
-        switch ($format) {
-            case 'svg':
-                return 'image/svg+xml';
-            case 'jpeg':
-                return 'image/jpeg';
-            case 'gif':
-                return 'image/gif';
-            case 'webp':
-                return 'image/webp';
-            case 'png':
-                return 'image/png';
-            default:
-                throw new \InvalidArgumentException('Unsupported format');
-        }
+        return match ($format) {
+            'svg' => 'image/svg+xml',
+            'png' => 'image/png',
+            'jpeg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'webp' => 'image/webp',
+            default => throw new \InvalidArgumentException('Unsupported format'),
+        };
     }
 
     private function getExtension($format)
     {
-        switch ($format) {
-            case 'svg':
-                return '.svg';
-            case 'png':
-                return '.png';
-            case 'jpeg':
-                return '.jpg';
-            case 'gif':
-                return '.gif';
-            case 'webp':
-                return '.webp';
-            default:
-                throw new \InvalidArgumentException('Unsupported format');
-        }
-    }
-
-    private function createQrCode($input)
-    {
-        if (is_callable([QrCode::class, 'create'])) {
-            return QrCode::create($input)
-                ->setErrorCorrectionLevel(new ErrorCorrectionLevelHigh())
-                ->setSize(300)
-                ->setMargin(10);
-        }
-
-        $qrCode = new QrCode($input);
-
-        if (method_exists($qrCode, 'setErrorCorrectionLevel')) {
-            $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevelHigh());
-        }
-
-        if (method_exists($qrCode, 'setSize')) {
-            $qrCode->setSize(300);
-        }
-
-        if (method_exists($qrCode, 'setMargin')) {
-            $qrCode->setMargin(10);
-        }
-
-        return $qrCode;
+        return match ($format) {
+            'svg' => '.svg',
+            'png' => '.png',
+            'jpeg' => '.jpg',
+            'gif' => '.gif',
+            'webp' => '.webp',
+            default => throw new \InvalidArgumentException('Unsupported format'),
+        };
     }
 
     private function convertPngToJpeg($pngContent)
@@ -122,7 +82,13 @@ class QRCodeController extends Controller
             $input = $validated['input'];
             $format = $validated['format'];
 
-            $qrCode = $this->createQrCode($input);
+            // Create QR code
+            $qrCode = new QrCode(
+                data: $input,
+                errorCorrectionLevel: ErrorCorrectionLevel::High,
+                size: 300,
+                margin: 10,
+            );
 
             $writer = $this->getWriter($format);
             $mimeType = $this->getMimeType($format);
@@ -150,7 +116,7 @@ class QRCodeController extends Controller
                 'error' => 'Validation failed: ' . implode(', ', $e->validator->errors()->all()),
             ], 422);
         } catch (\Exception $e) {
-            Log::error('QR Code Generation Error: ' . $e->getMessage(), ['exception' => $e]);
+            \Log::error('QR Code Generation Error: ' . $e->getMessage(), ['exception' => $e]);
             return response()->json([
                 'success' => false,
                 'error' => $e->getMessage(),
@@ -169,7 +135,12 @@ class QRCodeController extends Controller
             $input = $validated['input'];
             $format = $validated['format'];
 
-            $qrCode = $this->createQrCode($input);
+            $qrCode = new QrCode(
+                data: $input,
+                errorCorrectionLevel: ErrorCorrectionLevel::High,
+                size: 300,
+                margin: 10,
+            );
 
             $writer = $this->getWriter($format);
             $mimeType = $this->getMimeType($format);
@@ -195,7 +166,7 @@ class QRCodeController extends Controller
                 'error' => 'Validation failed: ' . implode(', ', $e->validator->errors()->all()),
             ], 422);
         } catch (\Exception $e) {
-            Log::error('QR Code Download Error: ' . $e->getMessage(), ['exception' => $e]);
+            \Log::error('QR Code Download Error: ' . $e->getMessage(), ['exception' => $e]);
             return response()->json([
                 'success' => false,
                 'error' => $e->getMessage(),

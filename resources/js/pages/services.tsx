@@ -5,13 +5,96 @@ import { useEffect, useState } from 'react';
 
 interface Service {
     id: number;
+    parent_id?: number | null;
     name: string;
     icon?: string | null;
     slug?: string | null;
     description?: string | null;
     page_content?: string | null;
     display_order?: number;
+    children?: Service[];
 }
+
+interface ServiceRow {
+    service: Service;
+    level: 0 | 1;
+    parentName: string | null;
+}
+
+const sortServices = (items: Service[]) => {
+    return [...items].sort((leftService, rightService) => {
+        const leftOrder = leftService.display_order ?? 0;
+        const rightOrder = rightService.display_order ?? 0;
+
+        if (leftOrder !== rightOrder) {
+            return leftOrder - rightOrder;
+        }
+
+        return leftService.id - rightService.id;
+    });
+};
+
+const buildServiceTree = (items: Service[]): Service[] => {
+    if (items.some((item) => Array.isArray(item.children))) {
+        return sortServices(items).map((item) => ({
+            ...item,
+            children: sortServices(item.children ?? []),
+        }));
+    }
+
+    const servicesById = new Map<number, Service>();
+    const rootServices: Service[] = [];
+
+    for (const item of items) {
+        servicesById.set(item.id, { ...item, children: [] });
+    }
+
+    for (const item of items) {
+        const normalized = servicesById.get(item.id);
+        if (!normalized) {
+            continue;
+        }
+
+        if (item.parent_id) {
+            const parentService = servicesById.get(item.parent_id);
+            if (parentService) {
+                parentService.children = parentService.children ?? [];
+                parentService.children.push(normalized);
+            } else {
+                rootServices.push(normalized);
+            }
+        } else {
+            rootServices.push(normalized);
+        }
+    }
+
+    return sortServices(rootServices).map((parentService) => ({
+        ...parentService,
+        children: sortServices(parentService.children ?? []),
+    }));
+};
+
+const flattenServiceTree = (items: Service[]): ServiceRow[] => {
+    const rows: ServiceRow[] = [];
+
+    for (const parentService of items) {
+        rows.push({
+            service: parentService,
+            level: 0,
+            parentName: null,
+        });
+
+        for (const childService of parentService.children ?? []) {
+            rows.push({
+                service: childService,
+                level: 1,
+                parentName: parentService.name,
+            });
+        }
+    }
+
+    return rows;
+};
 
 export default function Services() {
     const [services, setServices] = useState<Service[]>([]);
@@ -21,6 +104,7 @@ export default function Services() {
     const [description, setDescription] = useState('');
     const [pageContent, setPageContent] = useState('');
     const [displayOrder, setDisplayOrder] = useState('0');
+    const [parentId, setParentId] = useState('');
     const [editingId, setEditingId] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -32,12 +116,12 @@ export default function Services() {
                 null;
             const initial = page?.props?.services ?? null;
             if (initial) {
-                setServices(initial as Service[]);
+                setServices(buildServiceTree(initial as Service[]));
                 return;
             }
 
             const res = await axios.get('/services/list');
-            setServices(res.data);
+            setServices(buildServiceTree(res.data as Service[]));
         } catch (err) {
             // ignore fetch errors for now
         }
@@ -58,6 +142,7 @@ export default function Services() {
         setDescription('');
         setPageContent('');
         setDisplayOrder('0');
+        setParentId('');
         setEditingId(null);
         setError(null);
     };
@@ -76,6 +161,7 @@ export default function Services() {
                 name,
                 icon,
                 slug,
+                parent_id: parentId ? parseInt(parentId, 10) : null,
                 description,
                 page_content: pageContent,
                 display_order: parseInt(displayOrder || '0', 10),
@@ -101,18 +187,24 @@ export default function Services() {
         }
     };
 
-    const edit = (s: Service) => {
-        setEditingId(s.id);
-        setName(s.name);
-        setIcon(s.icon ?? '');
-        setSlug(s.slug ?? '');
-        setDescription(s.description ?? '');
-        setPageContent(s.page_content ?? '');
-        setDisplayOrder(String(s.display_order ?? '0'));
+    const edit = (service: Service) => {
+        setEditingId(service.id);
+        setName(service.name);
+        setIcon(service.icon ?? '');
+        setSlug(service.slug ?? '');
+        setDescription(service.description ?? '');
+        setPageContent(service.page_content ?? '');
+        setDisplayOrder(String(service.display_order ?? '0'));
+        setParentId(service.parent_id ? String(service.parent_id) : '');
     };
 
     const remove = async (id: number) => {
-        if (!confirm('Delete this service?')) return;
+        if (
+            !confirm(
+                'Delete this service? If it is a parent, its sub-services will also be deleted.',
+            )
+        )
+            return;
         try {
             const csrf = getCsrf();
             if (!csrf) throw new Error('CSRF token not found');
@@ -125,6 +217,11 @@ export default function Services() {
             alert((err as Error).message || 'Error deleting');
         }
     };
+
+    const serviceRows = flattenServiceTree(services);
+    const parentServiceOptions = services.filter(
+        (service) => service.id !== editingId,
+    );
 
     return (
         <AppLayout breadcrumbs={[{ title: 'Services', href: '/services' }]}>
@@ -177,6 +274,31 @@ export default function Services() {
                                     value={slug}
                                     onChange={(e) => setSlug(e.target.value)}
                                 />
+                            </div>
+
+                            <div>
+                                <label className="mb-2 block text-sm font-medium">
+                                    Parent Service
+                                </label>
+                                <select
+                                    className="w-full rounded-lg border px-3 py-2"
+                                    value={parentId}
+                                    onChange={(event) =>
+                                        setParentId(event.target.value)
+                                    }
+                                >
+                                    <option value="">
+                                        No Parent (Top-level Service)
+                                    </option>
+                                    {parentServiceOptions.map((service) => (
+                                        <option
+                                            key={service.id}
+                                            value={service.id}
+                                        >
+                                            {service.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
 
                             <div>
@@ -255,6 +377,8 @@ export default function Services() {
                                 <thead>
                                     <tr className="text-left">
                                         <th className="px-3 py-2">Name</th>
+                                        <th className="px-3 py-2">Type</th>
+                                        <th className="px-3 py-2">Parent</th>
                                         <th className="px-3 py-2">Icon</th>
                                         <th className="px-3 py-2">Slug</th>
                                         <th className="px-3 py-2">Order</th>
@@ -265,7 +389,7 @@ export default function Services() {
                                     {services.length === 0 && (
                                         <tr>
                                             <td
-                                                colSpan={5}
+                                                colSpan={7}
                                                 className="px-3 py-6 text-center text-sm text-muted-foreground"
                                             >
                                                 No services found
@@ -273,40 +397,68 @@ export default function Services() {
                                         </tr>
                                     )}
 
-                                    {services.map((s) => (
-                                        <tr key={s.id} className="border-t">
-                                            <td className="max-w-xs truncate px-3 py-2 align-top">
-                                                {s.name}
-                                            </td>
-                                            <td className="px-3 py-2 align-top text-xs">
-                                                {s.icon}
-                                            </td>
-                                            <td className="px-3 py-2 align-top text-xs">
-                                                {s.slug}
-                                            </td>
-                                            <td className="px-3 py-2 align-top">
-                                                {s.display_order}
-                                            </td>
-                                            <td className="px-3 py-2 align-top">
-                                                <div className="flex gap-2">
-                                                    <button
-                                                        onClick={() => edit(s)}
-                                                        className="rounded border px-3 py-1 text-sm"
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                    <button
-                                                        onClick={() =>
-                                                            remove(s.id)
+                                    {serviceRows.map(
+                                        ({ service, level, parentName }) => (
+                                            <tr
+                                                key={service.id}
+                                                className="border-t"
+                                            >
+                                                <td className="max-w-xs truncate px-3 py-2 align-top">
+                                                    <span
+                                                        className={
+                                                            level === 1
+                                                                ? 'pl-5'
+                                                                : ''
                                                         }
-                                                        className="rounded bg-red-600 px-3 py-1 text-sm text-white"
                                                     >
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                                        {level === 1
+                                                            ? '↳ '
+                                                            : ''}
+                                                        {service.name}
+                                                    </span>
+                                                </td>
+                                                <td className="px-3 py-2 align-top">
+                                                    {level === 0
+                                                        ? 'Parent'
+                                                        : 'Sub-service'}
+                                                </td>
+                                                <td className="px-3 py-2 align-top text-xs">
+                                                    {parentName ?? '-'}
+                                                </td>
+                                                <td className="px-3 py-2 align-top text-xs">
+                                                    {service.icon}
+                                                </td>
+                                                <td className="px-3 py-2 align-top text-xs">
+                                                    {service.slug}
+                                                </td>
+                                                <td className="px-3 py-2 align-top">
+                                                    {service.display_order}
+                                                </td>
+                                                <td className="px-3 py-2 align-top">
+                                                    <div className="flex gap-2">
+                                                        <button
+                                                            onClick={() =>
+                                                                edit(service)
+                                                            }
+                                                            className="rounded border px-3 py-1 text-sm"
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                        <button
+                                                            onClick={() =>
+                                                                remove(
+                                                                    service.id,
+                                                                )
+                                                            }
+                                                            className="rounded bg-red-600 px-3 py-1 text-sm text-white"
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ),
+                                    )}
                                 </tbody>
                             </table>
                         </div>

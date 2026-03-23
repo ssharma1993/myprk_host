@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -37,23 +36,16 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $quoteParts = Str::of(Inspiring::quote())->explode('-');
-        $message = trim($quoteParts[0] ?? '');
-        $author = trim($quoteParts[1] ?? '');
+        [$message, $author] = explode(' - ', Inspiring::quote(), 2);
 
-        return array_merge(parent::share($request), [
+        return [
+            ...parent::share($request),
             'name' => config('app.name'),
-            'quote' => ['message' => $message, 'author' => $author],
+            'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user(),
             ],
-            'flash' => [
-                'success' => $request->session()->get('success'),
-                'warning' => $request->session()->get('warning'),
-                'error' => $request->session()->get('error'),
-                'newsletterStatus' => $request->session()->get('newsletter_status'),
-            ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-        ]);
+        ];
     }
 }
