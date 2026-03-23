@@ -26,3 +26,8 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+!/public/client/
+!/public/client/assets/
+!/public/client/assets/**
+/public/client/assets/**/.DS_Store
