@@ -38,9 +38,10 @@
                             <!-- <span class="main-header__call__icon"><i class="icon-phone-call"></i></span> -->
                             <div class="main-header__call__content">
                                 <p class="main-header__call__title">Book Consultation</p>
-                                <a href="{{ config('company.phone_link') }}" class="main-header__call__number">{{ config('company.phone') }}</a>
-                                <br />
-                                <a href="mailto:{{ config('company.email') }}" class="main-header__call__email">{{ config('company.email') }}</a>
+                                <a style="padding-left: 5px;" href="{{ config('company.phone_link') }}"
+                                    class="main-header__call__number">{{ config('company.phone') }}</a>
+                                <a style="padding-left: 5px;" href="mailto:{{ config('company.email') }}"
+                                    class="main-header__call__email">{{ config('company.email') }}</a>
                                 <!-- Add this line -->
                             </div>
                         </div><!-- /.main-header__call -->
