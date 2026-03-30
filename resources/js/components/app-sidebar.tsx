@@ -19,6 +19,8 @@ import {
     LayoutGrid,
     LayoutList,
     LayoutPanelLeft,
+    Link as LinkIcon,
+    SearchCheck,
 } from 'lucide-react';
 import AppLogo from './app-logo';
 
@@ -47,6 +49,16 @@ const mainNavItems: NavItem[] = [
         title: 'Newsletter',
         href: '/admin/newsletter',
         icon: LayoutPanelLeft,
+    },
+    {
+        title: 'SEO',
+        href: '/admin/seo',
+        icon: SearchCheck,
+    },
+    {
+        title: 'Social Links',
+        href: '/admin/social-links',
+        icon: LinkIcon,
     },
 ];
 

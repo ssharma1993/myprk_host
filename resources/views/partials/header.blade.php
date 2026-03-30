@@ -17,15 +17,25 @@
                             <li class="dropdown">
                                 <a>Services</a>
                                 <ul>
-                                    @foreach($services as $service)
-                                    <li><a href="{{ url('/service/' . $service->id) }}">{{ $service->name }}</a></li>
+                                    @forelse(($services ?? []) as $service)
+                                    <li class="dropdown"><a
+                                            href="{{ route('service.show', $service->slug) }}">{{ $service->name }}</a>
+                                        <ul>
+                                            @foreach(($service->children ?? []) as $child)
+                                            <li><a href="{{ route('service.show', $child->slug) }}">{{ $child->name }}</a>
+                                            </li>
+                                    </li>
                                     @endforeach
                                 </ul>
-                            </li>
-                            <li><a href="{{ url('/portfolio') }}">Portfolio</a></li>
-                            <li><a href="{{ url('/testimonials') }}">Testimonials</a></li>
-                            <li><a href="{{ url('/resources') }}">Resources</a></li>
-                            <li><a href="{{ url('/contact') }}">Contact Us</a></li>
+                                @empty
+                            <li><a href="{{ url('/resources') }}">View Services</a></li>
+                            @endforelse
+                        </ul>
+                        </li>
+                        <li><a href="{{ url('/portfolio') }}">Portfolio</a></li>
+                        <li><a href="{{ url('/testimonials') }}">Testimonials</a></li>
+                        <li><a href="{{ url('/resources') }}">Resources</a></li>
+                        <li><a href="{{ url('/contact') }}">Contact Us</a></li>
                         </ul>
                     </nav><!-- /.main-header__nav -->
                     <div class="main-header__right__right">

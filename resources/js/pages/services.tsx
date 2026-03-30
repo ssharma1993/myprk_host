@@ -11,6 +11,7 @@ interface Service {
     slug?: string | null;
     description?: string | null;
     page_content?: string | null;
+    image_path?: string | null;
     display_order?: number;
     children?: Service[];
 }
@@ -96,6 +97,31 @@ const flattenServiceTree = (items: Service[]): ServiceRow[] => {
     return rows;
 };
 
+const resolveImageUrl = (imagePath?: string | null): string | null => {
+    if (!imagePath) {
+        return null;
+    }
+
+    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+        return imagePath;
+    }
+
+    if (imagePath.startsWith('/storage/')) {
+        return imagePath;
+    }
+
+    return `/storage/${imagePath}`;
+};
+
+const toSlug = (value: string): string => {
+    return value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+};
+
 export default function Services() {
     const [services, setServices] = useState<Service[]>([]);
     const [name, setName] = useState('');
@@ -105,6 +131,9 @@ export default function Services() {
     const [pageContent, setPageContent] = useState('');
     const [displayOrder, setDisplayOrder] = useState('0');
     const [parentId, setParentId] = useState('');
+    const [slugTouched, setSlugTouched] = useState(false);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [editingId, setEditingId] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -139,10 +168,13 @@ export default function Services() {
         setName('');
         setIcon('');
         setSlug('');
+        setSlugTouched(false);
         setDescription('');
         setPageContent('');
         setDisplayOrder('0');
         setParentId('');
+        setImageFile(null);
+        setImagePreview(null);
         setEditingId(null);
         setError(null);
     };
@@ -156,28 +188,42 @@ export default function Services() {
             return;
         }
 
+        const computedSlug = toSlug(slug || name);
+
+        if (!computedSlug) {
+            setError('Slug is required');
+            return;
+        }
+
         try {
-            const payload = {
-                name,
-                icon,
-                slug,
-                parent_id: parentId ? parseInt(parentId, 10) : null,
-                description,
-                page_content: pageContent,
-                display_order: parseInt(displayOrder || '0', 10),
-            };
             const csrf = getCsrf();
             if (!csrf) throw new Error('CSRF token not found');
 
-            const url = editingId ? `/services/${editingId}` : '/services';
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('icon', icon);
+            formData.append('slug', computedSlug);
+            formData.append('parent_id', parentId ? parentId : '');
+            formData.append('description', description);
+            formData.append('page_content', pageContent);
+            formData.append('display_order', displayOrder || '0');
+            if (imageFile) {
+                formData.append('image', imageFile);
+            }
+
+            const headers = {
+                'X-CSRF-TOKEN': csrf,
+                'Content-Type': 'multipart/form-data',
+            };
+
             if (editingId) {
-                await axios.put(url, payload, {
-                    headers: { 'X-CSRF-TOKEN': csrf },
+                // PHP cannot receive files via PUT, use POST + _method spoofing
+                formData.append('_method', 'PUT');
+                await axios.post(`/services/${editingId}`, formData, {
+                    headers,
                 });
             } else {
-                await axios.post(url, payload, {
-                    headers: { 'X-CSRF-TOKEN': csrf },
-                });
+                await axios.post('/services', formData, { headers });
             }
 
             await fetchServices();
@@ -192,10 +238,13 @@ export default function Services() {
         setName(service.name);
         setIcon(service.icon ?? '');
         setSlug(service.slug ?? '');
+        setSlugTouched(Boolean(service.slug));
         setDescription(service.description ?? '');
         setPageContent(service.page_content ?? '');
         setDisplayOrder(String(service.display_order ?? '0'));
         setParentId(service.parent_id ? String(service.parent_id) : '');
+        setImageFile(null);
+        setImagePreview(resolveImageUrl(service.image_path));
     };
 
     const remove = async (id: number) => {
@@ -247,7 +296,14 @@ export default function Services() {
                                 <input
                                     className="w-full rounded-lg border px-3 py-2"
                                     value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setName(value);
+
+                                        if (!slugTouched || !slug.trim()) {
+                                            setSlug(toSlug(value));
+                                        }
+                                    }}
                                     required
                                 />
                             </div>
@@ -272,7 +328,11 @@ export default function Services() {
                                     className="w-full rounded-lg border px-3 py-2"
                                     placeholder="e.g., family-visa"
                                     value={slug}
-                                    onChange={(e) => setSlug(e.target.value)}
+                                    onChange={(e) => {
+                                        setSlugTouched(true);
+                                        setSlug(toSlug(e.target.value));
+                                    }}
+                                    required
                                 />
                             </div>
 
@@ -343,6 +403,42 @@ export default function Services() {
                                 />
                             </div>
 
+                            <div>
+                                <label className="mb-2 block text-sm font-medium">
+                                    Service Image
+                                </label>
+                                {imagePreview && (
+                                    <div className="mb-2">
+                                        <img
+                                            src={imagePreview}
+                                            alt="Current image"
+                                            className="h-24 w-auto rounded-lg border object-cover"
+                                        />
+                                        <p className="mt-1 text-xs text-muted-foreground">
+                                            Current image
+                                        </p>
+                                    </div>
+                                )}
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="w-full rounded-lg border px-3 py-2 text-sm"
+                                    onChange={(e) => {
+                                        const file =
+                                            e.target.files?.[0] ?? null;
+                                        setImageFile(file);
+                                        if (file) {
+                                            setImagePreview(
+                                                URL.createObjectURL(file),
+                                            );
+                                        }
+                                    }}
+                                />
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                    JPG, PNG, WebP or GIF · max 5 MB
+                                </p>
+                            </div>
+
                             {error && (
                                 <div className="text-sm text-red-600">
                                     {error}
@@ -381,6 +477,7 @@ export default function Services() {
                                         <th className="px-3 py-2">Parent</th>
                                         <th className="px-3 py-2">Icon</th>
                                         <th className="px-3 py-2">Slug</th>
+                                        <th className="px-3 py-2">Image</th>
                                         <th className="px-3 py-2">Order</th>
                                         <th className="px-3 py-2">Actions</th>
                                     </tr>
@@ -389,7 +486,7 @@ export default function Services() {
                                     {services.length === 0 && (
                                         <tr>
                                             <td
-                                                colSpan={7}
+                                                colSpan={8}
                                                 className="px-3 py-6 text-center text-sm text-muted-foreground"
                                             >
                                                 No services found
@@ -430,6 +527,25 @@ export default function Services() {
                                                 </td>
                                                 <td className="px-3 py-2 align-top text-xs">
                                                     {service.slug}
+                                                </td>
+                                                <td className="px-3 py-2 align-top">
+                                                    {resolveImageUrl(
+                                                        service.image_path,
+                                                    ) ? (
+                                                        <img
+                                                            src={
+                                                                resolveImageUrl(
+                                                                    service.image_path,
+                                                                ) as string
+                                                            }
+                                                            alt={service.name}
+                                                            className="h-10 w-16 rounded object-cover"
+                                                        />
+                                                    ) : (
+                                                        <span className="text-xs text-muted-foreground">
+                                                            —
+                                                        </span>
+                                                    )}
                                                 </td>
                                                 <td className="px-3 py-2 align-top">
                                                     {service.display_order}

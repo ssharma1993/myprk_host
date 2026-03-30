@@ -2,6 +2,80 @@
 
 @section('title','Home')
 
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const section = document.querySelector('.visa-two--image-sticky');
+        if (!section) return;
+
+        const stickyCol = section.querySelector('.visa-two__sticky-col');
+        const rightCol = section.querySelector('.col-xl-7');
+        const imageWrap = section.querySelector('.visa-two__images');
+        if (!stickyCol || !imageWrap) return;
+
+        imageWrap.style.transition = 'top .35s ease, left .35s ease, transform .35s ease, width .35s ease';
+
+        const resetImage = () => {
+            imageWrap.style.position = 'relative';
+            imageWrap.style.top = '250px';
+            imageWrap.style.bottom = 'auto';
+            imageWrap.style.left = '0';
+            imageWrap.style.width = '100%';
+            imageWrap.style.transform = 'none';
+        };
+
+        const updateStickyImage = () => {
+            if (window.innerWidth < 1200) {
+                stickyCol.style.minHeight = '';
+                resetImage();
+                return;
+            }
+
+            if (rightCol) {
+                stickyCol.style.minHeight = rightCol.offsetHeight + 'px';
+            }
+
+            const sectionRect = section.getBoundingClientRect();
+            const stickyColRect = stickyCol.getBoundingClientRect();
+            const imageHeight = imageWrap.offsetHeight;
+            const viewportMiddleTop = (window.innerHeight / 2) - (imageHeight / 2);
+            const sectionTopDoc = window.scrollY + sectionRect.top + 250;
+            const sectionBottomDoc = sectionTopDoc + section.offsetHeight - 250;
+            const maxFixedScrollY = sectionBottomDoc - imageHeight - viewportMiddleTop;
+
+            if ((window.scrollY + viewportMiddleTop) < sectionTopDoc) {
+                resetImage();
+                return;
+            }
+
+            if (window.scrollY <= maxFixedScrollY) {
+                imageWrap.style.position = 'fixed';
+                imageWrap.style.top = '50%';
+                imageWrap.style.bottom = 'auto';
+                imageWrap.style.left = stickyColRect.left + 'px';
+                imageWrap.style.width = stickyColRect.width + 'px';
+                imageWrap.style.transform = 'translateY(-50%)';
+                return;
+            }
+
+            imageWrap.style.position = 'absolute';
+            imageWrap.style.top = 'auto';
+            imageWrap.style.bottom = '0';
+            imageWrap.style.left = '0';
+            imageWrap.style.width = '100%';
+            imageWrap.style.transform = 'none';
+        };
+
+        updateStickyImage();
+        window.addEventListener('scroll', updateStickyImage, {
+            passive: true
+        });
+        window.addEventListener('resize', updateStickyImage);
+    });
+</script>
+@endpush
+
 @section('content')
 <section class="hero-slider-two">
     <div class="hero-slider-two__carousel visanet-owl__carousel visanet-owl__carousel--basic-nav owl-carousel owl-theme"
@@ -35,16 +109,16 @@
                     <div class="col-xl-7 col-lg-10">
                         <div class="hero-slider-two__content">
                             <h2 class="hero-slider-two__title">
-                                Family Reunited <br> <span class="hero-slider-two__title__group"><span
+                                Turning <br> <span class="hero-slider-two__title__group"><span
                                         class="hero-slider-two__title__shape-1"><img
                                             src="assets/images/shapes/hero-slider-shape-2-2.png" alt="shape"></span>
                                     <span class="hero-slider-two__title__shape-2"></span> <span
-                                        class="hero-slider-two__title__highlight">In Canada</span></span> <br>
-                                Made Easy
+                                        class="hero-slider-two__title__highlight">Immigration Dreams</span></span> <br>
+                                Into Reality
                             </h2>
                             <div class="hero-slider-two__description">
-                                <p class="hero-slider-two__text">Bring your loved ones to Canada with our expert <br>
-                                    family sponsorship and reunion visa services.</p>
+                                <p class="hero-slider-two__text">Expert guidance, personalized support, and hassle-free
+                                    solutions to help. you start your new life in Canada with confidence.</p>
                             </div>
                             <div class="hero-slider-two__button">
                                 <a href="{{ route('contact') }}" class="visanet-btn visanet-btn--black">
@@ -78,16 +152,17 @@
                     <div class="col-xl-7 col-lg-10">
                         <div class="hero-slider-two__content">
                             <h2 class="hero-slider-two__title">
-                                Skilled Worker<br> <span class="hero-slider-two__title__group"><span
+                                Helping You<br> <span class="hero-slider-two__title__group"><span
                                         class="hero-slider-two__title__shape-1"><img
                                             src="assets/images/shapes/hero-slider-shape-2-2.png" alt="shape"></span>
                                     <span class="hero-slider-two__title__shape-2"></span><span
-                                        class="hero-slider-two__title__highlight">Express Entry</span></span> <br>
-                                Your Path to Canada
+                                        class="hero-slider-two__title__highlight">Build A Brighter</span></span> <br>
+                                Future
                             </h2>
                             <div class="hero-slider-two__description">
-                                <p class="hero-slider-two__text">Fast-track your Canadian permanent residency through
-                                    <br> Express Entry with our proven immigration expertise.
+                                <p class="hero-slider-two__text">Empowering you with expert immigration solutions,
+                                    personalized support, and a seamless process for a successful and secure future in
+                                    Canada.
                                 </p>
                             </div>
                             <div class="hero-slider-two__button">
@@ -122,16 +197,16 @@
                     <div class="col-xl-7 col-lg-10">
                         <div class="hero-slider-two__content">
                             <h2 class="hero-slider-two__title">
-                                Study & Build <br> <span class="hero-slider-two__title__group"><span
+                                Guiding <br> <span class="hero-slider-two__title__group"><span
                                         class="hero-slider-two__title__shape-1"><img
                                             src="assets/images/shapes/hero-slider-shape-2-2.png" alt="shape"></span>
                                     <span class="hero-slider-two__title__shape-2"></span> <span
-                                        class="hero-slider-two__title__highlight">Your Future</span></span> <br>
-                                in Canada
+                                        class="hero-slider-two__title__highlight">You Every Step</span></span> <br>
+                                Of The Way
                             </h2>
                             <div class="hero-slider-two__description">
-                                <p class="hero-slider-two__text">Secure your study permit and explore post-graduation
-                                    <br> work opportunities with PRK Immigration guidance.
+                                <p class="hero-slider-two__text">Providing expert support, personalized guidance, and
+                                    hassle-free solutions at every step of your immigration journey.
                                 </p>
                             </div>
                             <div class="hero-slider-two__button">
@@ -148,85 +223,116 @@
                 </div><!-- /.row -->
             </div><!-- /.container -->
         </div><!-- /.hero-slider-two__item -->
+        <div class="hero-slider-two__item">
+            <div class="hero-slider-two__bg-1"
+                style="background-image: url(assets/images/shapes/hero-slider-bg-shape-2-1.png);">
+                <img src="assets/images/shapes/hero-slider-shape-2-1.png" alt="shape" class="hero-slider-two__shape-1">
+            </div><!-- /.hero-slider-two__bg-1 -->
+            <div class="hero-slider-two__bg-2">
+                <div class="hero-slider-two__bg-2__inner"
+                    style="background-image: url(assets/images/backgrounds/hero-slider-bg-2-4.jpg);"></div>
+
+                <img src="assets/images/shapes/hero-slider-shape-2-3.png" alt="shape" class="hero-slider-two__shape-2">
+                <img src="assets/images/shapes/hero-slider-shape-2-4.png" alt="shape" class="hero-slider-two__shape-3">
+                <img src="assets/images/shapes/hero-slider-shape-2-5.png" alt="shape" class="hero-slider-two__shape-4">
+            </div><!-- /.hero-slider-two__bg-2 -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-7 col-lg-10">
+                        <div class="hero-slider-two__content">
+                            <h2 class="hero-slider-two__title">
+                                Seamless Visa &amp; <br> <span class="hero-slider-two__title__group"><span
+                                        class="hero-slider-two__title__shape-1"><img
+                                            src="assets/images/shapes/hero-slider-shape-2-2.png" alt="shape"></span>
+                                    <span class="hero-slider-two__title__shape-2"></span> <span
+                                        class="hero-slider-two__title__highlight">Immigration</span></span> <br>
+                                Solutions
+                            </h2>
+                            <div class="hero-slider-two__description">
+                                <p class="hero-slider-two__text">Effortless visa and immigration services with expert
+                                    guidance, personalized support, and a smooth transition to Canada for individuals,
+                                    families, and professionals.
+                                </p>
+                            </div>
+                            <div class="hero-slider-two__button">
+                                <a href="{{ route('contact') }}" class="visanet-btn visanet-btn--black">
+                                    <span class="visanet-btn__icon-box">
+                                        <span class="visanet-btn__icon"><span><i
+                                                    class="icon-arrow-right-3"></i></span></span>
+                                    </span>
+                                    <span class="visanet-btn__text">Book Free Consultation</span>
+                                </a>
+                            </div>
+                        </div><!-- /.hero-slider-two__content -->
+                    </div><!-- /.col-xl-7 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.hero-slider-two__item -->
     </div><!-- /.hero-slider-two__carousel -->
 </section><!-- /.hero-slider-two -->
 
 <section class="features">
     <div class="container">
         <!-- <div class="features__bg"></div>/.features__bg -->
+        <br />
         <div class="sec-title sec-title--center">
             <div class="sec-title__top" data-aos="fade-down" data-aos-anchor-placement="top-bottom"
                 data-aos-duration="1500">
-                <!-- <span class="sec-title__icon sec-title__icon--left"><i class="icon-airplane"></i></span> -->
+                <span class="sec-title__icon sec-title__icon--left"><i class="icon-airplane"></i></span>
                 <br>
-                <!-- <p class="sec-title__tagline">WHY CHOOSE US? </p> -->
-                <!-- <span class="sec-title__icon sec-title__icon--right"><i class="icon-airplane-2"></i></span> -->
+                <br>
+                <p class="sec-title__tagline">Service We Provide </p>
+                <span class="sec-title__icon sec-title__icon--right"><i class="icon-airplane-2"></i></span>
             </div><!-- /.sec-title__top -->
-            <h2 class="sec-title__title bw-split-in-right">Why PRK Immigration? <br></h2>
+            <h2 class="sec-title__title bw-split-in-right">Service We Provide
+                Explore Our Visa Citizenship &
+                Immigration Services <br></h2>
             <br>
             <!-- /.sec-title__title -->
         </div><!-- /.sec-title -->
         <div class="row gutter-y-30">
-            <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
-                data-aos-duration="1300" data-aos-delay="100">
-                <div class="features__card">
+            @foreach($services as $service)
+            @php
+            $isEven = $services->count() % 2 === 0;
+            $colClass = $isEven ? 'col-xl-6 col-md-6' : 'col-xl-4 col-md-6';
+            @endphp
+            <div class="{{ $colClass }}" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
+                data-aos-duration="1300" data-aos-delay="{{ 100 + ($loop->index * 100) }}">
+
+                <div class="features__card" style="display: flex; flex-direction: column; height: 100%;">
                     <div class="features__image">
-                        <img src="assets/images/resources/features-1-1.jpg" alt="features">
+                        <img src="/storage/{{ $service->image_path }}" alt="{{ $service->name }}">
                     </div><!-- /.features__image -->
-                    <div class="features__content">
+                    <div class="features__content" style="flex: 1; display: flex; flex-direction: column;">
                         <div class="features__icon-box">
-                            <span class="features__icon"><i class="icon-passport"></i></span>
+                            <span class="features__icon"><i class="{{ $service->icon }}"></i></span>
                         </div><!-- /.features__icon-box -->
-                        <h2 class="features__title"><a href="{{ route('about') }}">Express Entry & PR</a></h2>
-                        <p class="features__text">Fast-track your Canadian permanent residency through Express Entry.
-                            Our experts guide you through every step of the application process.</p>
-                        <a href="{{ route('about') }}" class="features__btn">
+                        <h2 class="features__title"><a
+                                href="{{ route('service.show', $service->slug) }}">{{ $service->name }}</a></h2>
+                        <p class="features__text" style="flex: 1;">{{ $service->description }}</p>
+                        @if($service->children && count($service->children) > 0)
+                        <div class="features__children">
+                            @foreach($service->children as $child)
+                            <a href="{{ route('service.show', $child->slug) }}" class="features__child-link">
+                                {{ $child->name }}
+                            </a> <br />
+                            @endforeach
+                        </div>
+                        @endif
+                        <br />
+                        <a href="{{ route('service.show', $service->slug) }}" class="features__btn">
                             Read More <span class="features__btn__icon"><i class="icon-arrow-right-up"></i></span>
                         </a><!-- /.features__btn -->
                     </div><!-- /.features__content -->
                     <img src="assets/images/shapes/features-shape-1-1.png" alt="shape" class="features__shape">
                 </div><!-- /.features__card -->
             </div><!-- /.col-xl-4 -->
-            <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
-                data-aos-duration="1300" data-aos-delay="200">
-                <div class="features__card">
-                    <div class="features__image">
-                        <img src="assets/images/resources/features-1-2.jpg" alt="features">
-                    </div><!-- /.features__image -->
-                    <div class="features__content">
-                        <div class="features__icon-box">
-                            <span class="features__icon"><i class="icon-visa-processing"></i></span>
-                        </div><!-- /.features__icon-box -->
-                        <h2 class="features__title"><a href="{{ route('about') }}">Work & Study Permits</a></h2>
-                        <p class="features__text">Secure your work or study permit with our comprehensive application
-                            support and expert guidance tailored to your needs.</p>
-                        <a href="{{ route('about') }}" class="features__btn">
-                            Read More <span class="features__btn__icon"><i class="icon-arrow-right-up"></i></span>
-                        </a><!-- /.features__btn -->
-                    </div><!-- /.features__content -->
-                    <img src="assets/images/shapes/features-shape-1-1.png" alt="shape" class="features__shape">
-                </div><!-- /.features__card -->
-            </div><!-- /.col-xl-4 -->
-            <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
-                data-aos-duration="1300" data-aos-delay="300">
-                <div class="features__card">
-                    <div class="features__image">
-                        <img src="assets/images/resources/features-1-3.jpg" alt="features">
-                    </div><!-- /.features__image -->
-                    <div class="features__content">
-                        <div class="features__icon-box">
-                            <span class="features__icon"><i class="icon-support"></i></span>
-                        </div><!-- /.features__icon-box -->
-                        <h2 class="features__title"><a href="{{ route('about') }}">Family Sponsorship</a></h2>
-                        <p class="features__text">Bring your loved ones to Canada with our specialized family
-                            sponsorship and support services.</p>
-                        <a href="{{ route('about') }}" class="features__btn">
-                            Read More <span class="features__btn__icon"><i class="icon-arrow-right-up"></i></span>
-                        </a><!-- /.features__btn -->
-                    </div><!-- /.features__content -->
-                    <img src="assets/images/shapes/features-shape-1-1.png" alt="shape" class="features__shape">
-                </div><!-- /.features__card -->
-            </div><!-- /.col-xl-4 -->
+
+            @if(($loop->index + 1) % ($isEven ? 2 : 3) === 0 || $loop->last)
+        </div>
+        <div class="row gutter-y-30">
+            @endif
+            @endforeach
         </div><!-- /.row -->
     </div><!-- /.container -->
 </section><!-- /.features -->
@@ -340,6 +446,78 @@
     <img src="assets/images/shapes/about-shape-2-1.png" alt="shape" class="about-two__shape">
 </section><!-- /.about-two -->
 
+<section class="why-choose-modern section-space-b">
+    <div class="container">
+        <div class="row gutter-y-40 align-items-center">
+            <div class="col-xl-5 col-lg-6">
+                <div class="why-choose-modern__content" data-aos="fade-right" data-aos-anchor-placement="top-bottom"
+                    data-aos-duration="1300">
+                    <p class="why-choose-modern__tagline">Why Choose Us</p>
+                    <h2 class="why-choose-modern__title">Reasons People Trust Our Consultancy</h2>
+                    <p class="why-choose-modern__desc">Trusted expertise, seamless process, personalized support, and a
+                        high
+                        success rate to make your immigration journey smooth and stress-free.</p>
+
+                    <div class="why-choose-modern__points">
+                        <div class="why-choose-modern__point">
+                            <div class="why-choose-modern__icon"><i class="fas fa-video"></i></div>
+                            <div class="why-choose-modern__point-content">
+                                <h3 class="why-choose-modern__point-title">Direct Online Interviews</h3>
+                                <p class="why-choose-modern__point-text">We make the visa process easy with virtual
+                                    consultations,
+                                    saving you time and effort.</p>
+                            </div>
+                        </div>
+
+                        <div class="why-choose-modern__point">
+                            <div class="why-choose-modern__icon"><i class="fas fa-passport"></i></div>
+                            <div class="why-choose-modern__point-content">
+                                <h3 class="why-choose-modern__point-title">Quick &amp; Easy Process</h3>
+                                <p class="why-choose-modern__point-text">Our streamlined approach ensures a smooth and
+                                    hassle-free visa application experience.</p>
+                            </div>
+                        </div>
+
+                        <div class="why-choose-modern__point">
+                            <div class="why-choose-modern__icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="why-choose-modern__point-content">
+                                <h3 class="why-choose-modern__point-title">99% Visa Approvals</h3>
+                                <p class="why-choose-modern__point-text">With our expert guidance, we have a high
+                                    success rate in
+                                    visa approvals.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-7 col-lg-6">
+                <div class="why-choose-modern__gallery" data-aos="fade-left" data-aos-anchor-placement="top-bottom"
+                    data-aos-duration="1300">
+                    <div class="why-choose-modern__gallery-main">
+                        <img src="assets/images/resources/why-choose-1-1.jpg" alt="Happy clients">
+                    </div>
+                    <div class="why-choose-modern__gallery-side why-choose-modern__gallery-side--top">
+                        <img src="assets/images/resources/why-choose-1-2.jpg" alt="Consultation meeting">
+                    </div>
+                    <div class="why-choose-modern__gallery-side why-choose-modern__gallery-side--bottom">
+                        <img src="assets/images/resources/features-1-1.jpg" alt="Professional support">
+                    </div>
+
+                    <div class="why-choose-modern__trust-card">
+                        <h4 class="why-choose-modern__trust-title">100+ Trusted Customer</h4>
+                        <div class="why-choose-modern__avatars">
+                            <img src="assets/images/resources/fly-client-1.png" alt="customer">
+                            <img src="assets/images/resources/fly-client-2.png" alt="customer">
+                            <img src="assets/images/resources/fly-client-3.png" alt="customer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- /.why-choose-modern -->
+
 <section class="funfact section-space-b">
     <div class="container">
         <div class="row gutter-y-30">
@@ -349,9 +527,9 @@
                     <div class="funfact__item__content">
                         <div class="funfact__item__icon-box"><span class="funfact__item__icon"><i
                                     class="icon-satisfaction"></i></span></div>
-                        <h3 class="funfact__item__count count-box"><span class="count-text" data-stop="285"
-                                data-speed="1500">0</span><span>k+</span></h3>
-                        <p class="funfact__item__title">Successful client <br> collaborations</p>
+                        <h3 class="funfact__item__count count-box"><span class="count-text" data-stop="100"
+                                data-speed="1500">0</span><span>+</span></h3>
+                        <p class="funfact__item__title">Satisfied <br />Clients</p>
                     </div><!-- /.funfact__item__content -->
                     <div class="funfact__item__bg">
                         <div style="background-image: url(assets/images/shapes/funfact-shape-1-1-.png);"
@@ -367,9 +545,9 @@
                     <div class="funfact__item__content">
                         <div class="funfact__item__icon-box"><span class="funfact__item__icon"><i
                                     class="icon-place"></i></span></div>
-                        <h3 class="funfact__item__count count-box"><span class="count-text" data-stop="83"
-                                data-speed="1500">0</span><span>k+</span></h3>
-                        <p class="funfact__item__title">Countries visa <br> Represented</p>
+                        <h3 class="funfact__item__count count-box"><span class="count-text" data-stop="10"
+                                data-speed="1500"></span><span>+</span></h3>
+                        <p class="funfact__item__title">Countries <br> Represented</p>
                     </div><!-- /.funfact__item__content -->
                     <div class="funfact__item__bg">
                         <div style="background-image: url(assets/images/shapes/funfact-shape-1-1-.png);"
@@ -385,9 +563,9 @@
                     <div class="funfact__item__content">
                         <div class="funfact__item__icon-box"><span class="funfact__item__icon"><i
                                     class="icon-immigration-officer"></i></span></div>
-                        <h3 class="funfact__item__count count-box"><span class="count-text" data-stop="195"
-                                data-speed="1500">0</span><span>k+</span></h3>
-                        <p class="funfact__item__title">Experience officer <br> immigration</p>
+                        <h3 class="funfact__item__count count-box"><span class="count-text" data-stop="10"
+                                data-speed="1500">0</span><span>+</span></h3>
+                        <p class="funfact__item__title">Experienced Immigration <br> Officers </p>
                     </div><!-- /.funfact__item__content -->
                     <div class="funfact__item__bg">
                         <div style="background-image: url(assets/images/shapes/funfact-shape-1-1-.png);"
@@ -403,9 +581,9 @@
                     <div class="funfact__item__content">
                         <div class="funfact__item__icon-box"><span class="funfact__item__icon"><i
                                     class="icon-completed-task"></i></span></div>
-                        <h3 class="funfact__item__count count-box"><span class="count-text" data-stop="366"
+                        <h3 class="funfact__item__count count-box"><span class="count-text" data-stop="50"
                                 data-speed="1500">0</span><span>+</span></h3>
-                        <p class="funfact__item__title">Perfect record <br> visa approval</p>
+                        <p class="funfact__item__title">Visa and <br /> Passport Approved</p>
                     </div><!-- /.funfact__item__content -->
                     <div class="funfact__item__bg">
                         <div style="background-image: url(assets/images/shapes/funfact-shape-1-1-.png);"
@@ -418,56 +596,6 @@
         </div><!-- /.row -->
     </div><!-- /.container -->
 </section><!-- /.funfact -->
-
-<section class="visa-two section-space">
-    <div class="visa-two__bg visanet-jarallax" data-jarallax data-speed="0.3s"
-        style="background-image: url(assets/images/backgrounds/visa-bg-2-1.jpg);">
-        <img src="assets/images/shapes/visa-shape-2-1.png" alt="shape" class="visa-two__shape">
-    </div><!-- /.visa-two__bg -->
-    <div class="container">
-        <div class="sec-title sec-title--dark sec-title--center">
-            <div class="sec-title__top" data-aos="fade-down" data-aos-anchor-placement="top-bottom"
-                data-aos-duration="1500">
-                <span class="sec-title__icon sec-title__icon--left"><i class="icon-airplane"></i></span>
-                <p class="sec-title__tagline">Varieties of visa</p>
-                <span class="sec-title__icon sec-title__icon--right"><i class="icon-airplane-2"></i></span>
-            </div><!-- /.sec-title__top -->
-            <h2 class="sec-title__title bw-split-in-right">Your Path to Canadian Immigration <br> Made Simple &
-                Successful</h2><!-- /.sec-title__title -->
-        </div><!-- /.sec-title -->
-        <div class="row gutter-y-40 align-items-center">
-            <div class="col-xl-5">
-                <div class="visa-two__images">
-                    @foreach($services as $service)
-                    <div class="visa-two__image{{ $loop->first ? ' active' : '' }}">
-                        <img src="assets/images/visa/visa-2-{{ $loop->index + 1 }}.jpg" alt="{{ $service->name }}">
-                    </div><!-- /.visa-two__image -->
-                    @endforeach
-                </div><!-- /.visa-two__images -->
-            </div><!-- /.col-xl-5 -->
-            <div class="col-xl-7">
-                @foreach($services as $service)
-                <div class="visa-two__item{{ $loop->first ? ' active' : '' }}" data-aos="fade-up"
-                    data-aos-anchor-placement="top-bottom" data-aos-duration="1300">
-                    <div class="visa-two__item__overlay"></div>
-                    <img src="assets/images/shapes/visa-shape-2-2.png" alt="shape" class="visa-two__item__shape">
-                    <div class="visa-two__content">
-                        <div class="visa-two__icon"><i class="{{ $service->icon }}"></i></div>
-                        <h3 class="visa-two__title"><a
-                                href="{{ route('service.show', $service->id) }}">{{ $service->name }}</a></h3>
-                        <span class="visa-two__divider">/</span>
-                        <p class="visa-two__text">{{ $service->description }}</p>
-                    </div>
-                    <a href="{{ route('service.show', $service->id) }}" class="visa-two__btn"><i
-                            class="icon-arrow-right-up"></i></a>
-                </div><!-- /.visa-two__item -->
-                @endforeach
-            </div><!-- /.col-xl-7 -->
-        </div><!-- /.row -->
-    </div><!-- /.container -->
-</section><!-- /.visa-two -->
-
-
 
 <section class="gallery-one section-space">
     <div class="container-fluid">
@@ -618,8 +746,8 @@
                     </div>
                 </div>
                 <h3 class="fly-one__client__funfact count-box">
-                    <span class="count-text" data-stop="10" data-speed="1500"></span>
-                    <span>M+</span>
+                    <span class="count-text" data-stop="100" data-speed="1500"></span>
+                    <span>+</span>
                 </h3>
                 <h4 class="fly-one__client__title">Trusted Customer</h4>
             </div><!-- /.fly-one__client -->
@@ -784,6 +912,66 @@
         </div><!-- /.work-process__carousel -->
     </div><!-- /.container -->
 </section><!-- /.work-process -->
+
+<section class="home-testimonials section-space-b">
+    <div class="container">
+        <div class="sec-title sec-title--center">
+            <div class="sec-title__top" data-aos="fade-down" data-aos-anchor-placement="top-bottom"
+                data-aos-duration="1500">
+                <p class="sec-title__tagline">Our Testimonials</p>
+            </div>
+            <h2 class="sec-title__title bw-split-in-right">Let's Explore What People Say <br> About Our Services</h2>
+        </div>
+
+        <div class="home-testimonials__carousel visanet-owl__carousel visanet-owl__carousel--basic-nav owl-carousel owl-theme"
+            data-owl-options='{
+                "items": 1,
+                "margin": 24,
+                "loop": true,
+                "smartSpeed": 700,
+                "nav": false,
+                "dots": true,
+                "autoplay": true,
+                "responsive": {
+                    "0": {"items": 1},
+                    "768": {"items": 2},
+                    "1200": {"items": 3}
+                }
+            }'>
+            @foreach($homeTestimonials as $testimonial)
+            <div class="home-testimonials__item" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
+                data-aos-duration="1300" data-aos-delay="{{ 100 + (($loop->index % 3) * 100) }}">
+                <div class="home-testimonials__stars mb-3">
+                    <span class="text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </span>
+                </div>
+                <p class="home-testimonials__text mb-4">"{{ $testimonial['text'] }}"</p>
+                <div class="home-testimonials__bottom">
+                    <div class="home-testimonials__author">
+                        <div class="home-testimonials__avatar-wrapper">
+                            <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}"
+                                class="home-testimonials__avatar-img"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="home-testimonials__avatar-fallback" style="display: none;">
+                                {{ strtoupper(substr($testimonial['name'], 0, 1)) }}
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="home-testimonials__name">{{ $testimonial['name'] }}</h3>
+                            <p class="home-testimonials__category">{{ $testimonial['category'] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section><!-- /.home-testimonials -->
 
 <section class="online-visa section-space-t">
     <div class="container">

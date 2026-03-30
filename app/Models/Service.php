@@ -6,10 +6,42 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Service extends Model
 {
     use HasFactory;
+
+    protected static function booted(): void
+    {
+        static::saving(function (Service $service) {
+            $source = $service->slug ?: $service->name;
+            $baseSlug = Str::slug((string) $source);
+
+            if ($baseSlug === '') {
+                $baseSlug = 'service';
+            }
+
+            $service->slug = static::generateUniqueSlug($baseSlug, $service->id);
+        });
+    }
+
+    private static function generateUniqueSlug(string $baseSlug, ?int $ignoreId = null): string
+    {
+        $slug = $baseSlug;
+        $counter = 2;
+
+        while (static::query()
+            ->where('slug', $slug)
+            ->when($ignoreId, fn($query) => $query->where('id', '!=', $ignoreId))
+            ->exists()
+        ) {
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +55,7 @@ class Service extends Model
         'slug',
         'description',
         'page_content',
+        'image_path',
         'display_order',
     ];
 

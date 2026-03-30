@@ -16,6 +16,12 @@
     # Force /gallery route through Laravel (avoid collision with public/gallery directory)
     RewriteRule ^gallery/?$ index.php [L]
 
+    # Force /robots.txt through Laravel to serve dynamic sitemap URL
+    RewriteRule ^robots\.txt$ index.php [L]
+
+    # Serve robots.txt dynamically via Laravel (so APP_URL is injected into Sitemap line)
+    RewriteRule ^robots\.txt$ index.php [L]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$

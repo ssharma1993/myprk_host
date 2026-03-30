@@ -11,14 +11,16 @@
                         consulting agencies, study abroad consultants, visa agents, and travel or overseas job services.
                     </p>
                     <div class="social-links">
-                        <!-- <a href="https://facebook.com"><span class="social-links__icon"><i
-                                    class="fab fa-facebook-f"></i><span class="sr-only">Facebook</span></span></a>
-                        <a href="https://x.com"><span class="social-links__icon"><i class="fab fa-twitter"></i><span
-                                    class="sr-only">X</span></span></a>
-                        <a href="https://linkedin.com"><span class="social-links__icon"><i
-                                    class="fab fa-linkedin-in"></i><span class="sr-only">Linkedin</span></span></a>
-                        <a href="https://instagram.com"><span class="social-links__icon"><i
-                                    class="fab fa-instagram"></i><span class="sr-only">Instagram</span></span></a> -->
+                        @if(isset($socialLinks) && $socialLinks->count() > 0)
+                        @foreach($socialLinks as $socialLink)
+                        <a href="{{ $socialLink->url }}" target="_blank" rel="noopener noreferrer">
+                            <span class="social-links__icon">
+                                <i class="{{ $socialLink->icon_class ?? 'fab fa-link' }}"></i>
+                                <span class="sr-only">{{ $socialLink->label }}</span>
+                            </span>
+                        </a>
+                        @endforeach
+                        @endif
                     </div><!-- /.social-links -->
                 </div><!-- /.footer-widget -->
             </div><!-- /.col-xl-3 -->
@@ -32,9 +34,34 @@
                     </ul>
                 </div><!-- /.footer-widget -->
             </div><!-- /.col-lg-3 -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
 
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="footer-widget footer-widget--links">
+                    <h2 class="footer-widget__title">Services</h2>
+                    @foreach($services as $service)
+                    <ul class="list-unstyled footer-widget__links">
+                        <!-- <li><a href="{{ route('service.show', $service->slug) }}">{{ $service->name }}</a></li> -->
+                        @if($service->children && count($service->children) > 0)
+                        <!-- <ul class="list-unstyled" "> -->
+                        @foreach($service->children as $child)
+                        <li><a href="{{ route('service.show', $child->slug) }}">{{ $child->name }}</a></li>
+                        @endforeach
+                        <!-- </ul> -->
+                        @endif
+                    </ul>
+                    @endforeach
+                </div><!-- /.footer-widget -->
             </div><!-- /.col-xl-3 -->
+            <div class="col-lg-3 col-md-5 col-sm-6">
+                <div class="footer-widget footer-widget--links">
+                    <h2 class="footer-widget__title">Hours</h2>
+                    <ul class="list-unstyled footer-widget__links">
+                        <li>Monday to Friday: 9:00am – 7:00pm</li>
+                        <li>Saturday: 10:00am – 6:00pm</li>
+                        <li>Sunday: 9:00am – 5:00pm</li>
+                    </ul>
+                </div><!-- /.footer-widget -->
+            </div><!-- /.col-lg-3 -->
 
         </div><!-- /.row -->
     </div><!-- /.container -->
@@ -71,12 +98,17 @@
                     href="{{ config('company.phone_link') }}">{{ config('company.phone') }}</a>
             </li>
         </ul>
-        <div class="social-links">
-            <!-- <a href="https://facebook.com"><span class="social-links__icon"><i class="fab fa-facebook-f"></i></span></a>
-            <a href="https://x.com"><span class="social-links__icon"><i class="fab fa-twitter"></i></span></a>
-            <a href="https://linkedin.com"><span class="social-links__icon"><i
-                        class="fab fa-linkedin-in"></i></span></a>
-            <a href="https://instagram.com"><span class="social-links__icon"><i class="fab fa-instagram"></i></span></a> -->
+        <div id="social-links" class="social-links">
+            @if(isset($socialLinks) && $socialLinks->count() > 0)
+            @foreach($socialLinks as $socialLink)
+            <a href="{{ $socialLink->url }}" target="_blank" rel="noopener noreferrer">
+                <span class="social-links__icon">
+                    <i class="{{ $socialLink->icon_class ?? 'fab fa-link' }}"></i>
+                    <span class="sr-only">{{ $socialLink->label }}</span>
+                </span>
+            </a>
+            @endforeach
+            @endif
         </div>
     </div>
 </div>

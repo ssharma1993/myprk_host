@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -42,13 +43,23 @@ class ServiceController extends Controller
                 'integer',
                 Rule::exists('services', 'id')->where(fn($query) => $query->whereNull('parent_id')),
             ],
-            'name' => 'required|string|max:255',
-            'icon' => 'nullable|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:services',
-            'description' => 'nullable|string',
-            'page_content' => 'nullable|string',
+            'name'          => 'required|string|max:255',
+            'icon'          => 'nullable|string|max:255',
+            'slug'          => 'nullable|string|max:255|unique:services',
+            'description'   => 'nullable|string',
+            'page_content'  => 'nullable|string',
             'display_order' => 'nullable|integer|min:0',
+            'image'         => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:5120',
+        ], [
+            'image.uploaded' => 'Image upload failed. Please ensure the server upload limit is at least 5MB and try again.',
+            'image.max' => 'Image must not be greater than 5MB.',
         ]);
+
+        if ($request->hasFile('image')) {
+            $data['image_path'] = $request->file('image')->store('services', 'public');
+        }
+
+        unset($data['image']);
 
         $service = Service::create($data);
 
@@ -67,12 +78,16 @@ class ServiceController extends Controller
                 Rule::exists('services', 'id')->where(fn($query) => $query->whereNull('parent_id')),
                 Rule::notIn([$service->id]),
             ],
-            'name' => 'required|string|max:255',
-            'icon' => 'nullable|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:services,slug,' . $service->id,
-            'description' => 'nullable|string',
-            'page_content' => 'nullable|string',
+            'name'          => 'required|string|max:255',
+            'icon'          => 'nullable|string|max:255',
+            'slug'          => 'nullable|string|max:255|unique:services,slug,' . $service->id,
+            'description'   => 'nullable|string',
+            'page_content'  => 'nullable|string',
             'display_order' => 'nullable|integer|min:0',
+            'image'         => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:5120',
+        ], [
+            'image.uploaded' => 'Image upload failed. Please ensure the server upload limit is at least 5MB and try again.',
+            'image.max' => 'Image must not be greater than 5MB.',
         ]);
 
         if (! empty($data['parent_id']) && $service->children()->exists()) {
@@ -80,6 +95,15 @@ class ServiceController extends Controller
                 'message' => 'A parent service with sub services cannot be assigned under another parent.',
             ], 422);
         }
+
+        if ($request->hasFile('image')) {
+            if ($service->image_path) {
+                Storage::disk('public')->delete($service->image_path);
+            }
+            $data['image_path'] = $request->file('image')->store('services', 'public');
+        }
+
+        unset($data['image']);
 
         $service->update($data);
 
@@ -91,6 +115,10 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
+        if ($service->image_path) {
+            Storage::disk('public')->delete($service->image_path);
+        }
+
         $service->delete();
 
         return response()->json(['success' => true]);

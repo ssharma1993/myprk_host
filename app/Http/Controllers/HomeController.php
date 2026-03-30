@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Models\Gallery;
 use App\Models\Sponsor;
+use App\Providers\HomeTestimonialsProvider;
 use App\Services\ContactFormService;
 use App\Http\Requests\StoreContactRequest;
 use Illuminate\Http\Request;
@@ -14,11 +15,23 @@ use Inertia\Inertia;
 class HomeController extends Controller
 {
     protected $services;
+    protected $featuredServices;
+    protected $homeTestimonialsProvider;
 
-    public function __construct()
+    public function __construct(HomeTestimonialsProvider $homeTestimonialsProvider)
     {
-        $this->services = Service::orderBy('display_order', 'asc')->get();
+        $this->homeTestimonialsProvider = $homeTestimonialsProvider;
+        $this->services = Service::with('children')
+            ->whereNull('parent_id')
+            ->orderBy('display_order', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $this->featuredServices = Service::whereNotNull('parent_id')
+            ->orderBy('parent_id', 'asc')
+            ->orderBy('display_order', 'asc')
+            ->get();
         view()->share('services', $this->services);
+        view()->share('featuredServices', $this->featuredServices);
     }
 
     /**
@@ -29,9 +42,10 @@ class HomeController extends Controller
         // return Inertia::render('home');
         $galleries = Gallery::orderBy('display_order', 'asc')->get();
         $sponsors = Sponsor::orderBy('display_order', 'asc')->get();
+        $homeTestimonials = $this->homeTestimonialsProvider->all();
         $this->incrementVisitorCount();
 
-        return view('home', compact('galleries', 'sponsors'));
+        return view('home', compact('galleries', 'sponsors', 'homeTestimonials'));
     }
 
     public function getVisitorCount(): int
@@ -115,7 +129,9 @@ class HomeController extends Controller
 
     public function testimonials()
     {
-        return view('testimonials');
+        $homeTestimonials = $this->homeTestimonialsProvider->all();
+
+        return view('testimonials', compact('homeTestimonials'));
     }
 
     public function resources()
@@ -129,9 +145,19 @@ class HomeController extends Controller
         return view('gallery.index', compact('galleries'));
     }
 
-    public function service($id)
+    public function service($slug)
     {
-        $service = Service::where('id', $id)->first();
-        return view('service', compact('service'));
+        $service = Service::with('children')->where('slug', $slug)->firstOrFail();
+
+        $childServices = collect();
+
+        if (is_null($service->parent_id)) {
+            $childServices = $service->children()
+                ->orderBy('display_order', 'asc')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+
+        return view('service', compact('service', 'childServices'));
     }
 }

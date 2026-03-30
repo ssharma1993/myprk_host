@@ -1,2 +1,2 @@
-User-agent: *
-Disallow:
+# This file is intentionally empty.
+# robots.txt is served dynamically by Laravel at /robots.txt route.

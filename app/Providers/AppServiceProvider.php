@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\SocialLink;
 use Illuminate\Support\ServiceProvider;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('*', function ($view) {
+            $view->with('socialLinks', SocialLink::getCachedForView());
+        });
     }
 }

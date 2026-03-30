@@ -9,18 +9,25 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\SeoController;
+use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\SocialLinkController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
-Route::get('/service/{id}', [HomeController::class, 'service'])->name('service.show');
+Route::get('/service/{slug}', [HomeController::class, 'service'])->name('service.show');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-Route::post('/contact', [HomeController::class, 'storeContact'])->name('contact.store');
+Route::post('/contact', [HomeController::class, 'storeContact'])->name('contact.store')->middleware('throttle:5,1');
 Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
 Route::get('/testimonials', [HomeController::class, 'testimonials'])->name('testimonials');
 Route::get('/resources', [HomeController::class, 'resources'])->name('resources');
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery.public');
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe')->middleware('throttle:5,1');
 Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
+
+// Sitemap & robots
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -48,6 +55,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Sponsor Routes
     Route::get('/admin/sponsors', [SponsorController::class, 'index'])->name('sponsors.index');
     Route::resource('/admin/sponsors', SponsorController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
+
+    // SEO Routes
+    Route::get('/admin/seo', [SeoController::class, 'index'])->name('seo.index');
+    Route::post('/admin/seo', [SeoController::class, 'update'])->name('seo.update');
+
+    // Social Links Routes
+    Route::get('/admin/social-links', [SocialLinkController::class, 'index'])->name('social-links.index');
+    Route::post('/admin/social-links', [SocialLinkController::class, 'update'])->name('social-links.update');
 
     // Newsletter Routes
     Route::get('/admin/newsletter', [NewsletterController::class, 'index'])->name('newsletter.index');
