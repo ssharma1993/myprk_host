@@ -19,7 +19,8 @@
                 <div class="visa-two__images">
                     @foreach($featuredServices as $service)
                     <div class="visa-two__image{{ $loop->first ? ' active' : '' }}">
-                        <img src="/storage/{{ $service->image_path }}" alt="{{ $service->name }}">
+                        <img src="{{ route('media.public', ltrim($service->image_path, '/')) }}"
+                            alt="{{ $service->name }}">
                     </div><!-- /.visa-two__image -->
                     @endforeach
                 </div><!-- /.visa-two__images -->

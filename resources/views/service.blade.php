@@ -2,7 +2,8 @@
 
 @section('title', $service->name)
 @section('meta_title', $service->name . ' | ' . config('app.name', 'PRK Immigration'))
-@section('meta_description', \Illuminate\Support\Str::limit(strip_tags($service->description ?: $service->page_content), 160))
+@section('meta_description', \Illuminate\Support\Str::limit(strip_tags($service->description ?: $service->page_content),
+160))
 @section('meta_keywords', $service->name . ', immigration service, visa service, PRK Immigration')
 
 @section('content')
@@ -36,7 +37,7 @@
 
                 @if(!is_null($service->parent_id) && !empty($service->image_path))
                 <div class="service-details__image mb-4">
-                    <img src="{{ str_starts_with($service->image_path, 'http://') || str_starts_with($service->image_path, 'https://') ? $service->image_path : asset('storage/' . ltrim($service->image_path, '/')) }}"
+                    <img src="{{ str_starts_with($service->image_path, 'http://') || str_starts_with($service->image_path, 'https://') ? $service->image_path : route('media.public', ltrim($service->image_path, '/')) }}"
                         alt="{{ $service->name }}" class="img-fluid rounded">
                 </div>
                 @endif
@@ -124,7 +125,8 @@
 
                 <div class="features__card" style="display: flex; flex-direction: column; height: 100%;">
                     <div class="features__image">
-                        <img src="/storage/{{ $childService->image_path }}" alt="{{ $childService->name }}">
+                        <img src="{{ route('media.public', ltrim($childService->image_path, '/')) }}"
+                            alt="{{ $childService->name }}">
                     </div>
                     <div class="features__content" style="flex: 1; display: flex; flex-direction: column;">
                         <div class="features__icon-box">

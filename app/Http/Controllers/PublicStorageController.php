@@ -19,12 +19,26 @@ class PublicStorageController extends Controller
         }
 
         $disk = Storage::disk('public');
+        $storageRelativePath = Str::startsWith($normalizedPath, 'storage/')
+            ? Str::after($normalizedPath, 'storage/')
+            : $normalizedPath;
 
-        if (! $disk->exists($normalizedPath)) {
+        $absolutePath = null;
+
+        if ($disk->exists($storageRelativePath)) {
+            $absolutePath = storage_path('app/public/' . $storageRelativePath);
+        } else {
+            $publicPath = public_path($normalizedPath);
+
+            if (File::exists($publicPath) && File::isFile($publicPath)) {
+                $absolutePath = $publicPath;
+            }
+        }
+
+        if ($absolutePath === null) {
             abort(404);
         }
 
-        $absolutePath = storage_path('app/public/' . $normalizedPath);
         $mimeType = File::mimeType($absolutePath) ?: 'application/octet-stream';
 
         return response()->file($absolutePath, [

@@ -301,7 +301,7 @@
 
                 <div class="features__card" style="display: flex; flex-direction: column; height: 100%;">
                     <div class="features__image">
-                        <img src="/storage/{{ $service->image_path }}" alt="{{ $service->name }}">
+                        <img src="{{ route('media.public', ltrim($service->image_path, '/')) }}" alt="{{ $service->name }}">
                     </div><!-- /.features__image -->
                     <div class="features__content" style="flex: 1; display: flex; flex-direction: column;">
                         <div class="features__icon-box">

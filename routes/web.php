@@ -35,6 +35,10 @@ Route::get('/storage/{path}', [PublicStorageController::class, 'show'])
     ->where('path', '.*')
     ->name('storage.public');
 
+Route::get('/media/{path}', [PublicStorageController::class, 'show'])
+    ->where('path', '.*')
+    ->name('media.public');
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function (HomeController $homeController) {
