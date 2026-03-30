@@ -12,6 +12,7 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SocialLinkController;
+use App\Http\Controllers\PublicStorageController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
@@ -28,6 +29,11 @@ Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'uns
 // Sitemap & robots
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
+
+// Public storage fallback for hosts where symbolic links are restricted
+Route::get('/storage/{path}', [PublicStorageController::class, 'show'])
+    ->where('path', '.*')
+    ->name('storage.public');
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
