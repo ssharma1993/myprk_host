@@ -60,6 +60,11 @@
                         <li>Saturday: 10:00am – 6:00pm</li>
                         <li>Sunday: 9:00am – 5:00pm</li>
                     </ul>
+                    <br />
+                    <br />
+                    <div class="footer-widget__image">
+                        <img src="{{ asset('rcic.png') }}" alt="RCIC" width="100" style="width: 100%;">
+                    </div>
                 </div><!-- /.footer-widget -->
             </div><!-- /.col-lg-3 -->
 
