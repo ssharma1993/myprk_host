@@ -9075,7 +9075,7 @@ li.active .team-details__info__text {
 }
 @media (max-width: 1199px) {
     .footer-widget--links {
-        padding-left: 30px;
+        /* padding-left: 30px; */
     }
 }
 @media (max-width: 767px) {

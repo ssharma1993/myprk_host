@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Mail\ContactFormMail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ContactFormService
@@ -22,7 +23,7 @@ class ContactFormService
 
             return true;
         } catch (\Exception $e) {
-            \Log::error('Contact form email error: ' . $e->getMessage());
+            Log::error('Contact form email error: ' . $e->getMessage());
             return false;
         }
     }

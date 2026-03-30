@@ -54,6 +54,14 @@
                         @enderror
                     </div>
                     <div class="mb-3">
+                        <input class="form-control @error('phone') is-invalid @enderror" type="tel" name="phone"
+                            placeholder="Your Phone Number (e.g. +14165551234)" value="{{ old('phone') }}"
+                            inputmode="tel" pattern="^\+?[1-9]\d{7,14}$" required>
+                        @error('phone')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <textarea class="form-control @error('message') is-invalid @enderror" name="message"
                             placeholder="Message" rows="6" required>{{ old('message') }}</textarea>
                         @error('message')

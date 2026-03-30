@@ -5,8 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class ContactFormMail extends Mailable implements ShouldQueue
@@ -24,37 +22,18 @@ class ContactFormMail extends Mailable implements ShouldQueue
     }
 
     /**
-     * Get the message envelope.
+     * Build the message.
      */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'New Contact Form Submission - ' . ($this->data['name'] ?? 'Unknown'),
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.contact-form',
-            with: [
+        return $this
+            ->subject('New Contact Form Submission - ' . ($this->data['name'] ?? 'Unknown'))
+            ->view('emails.contact-form')
+            ->with([
                 'name' => $this->data['name'] ?? '',
                 'email' => $this->data['email'] ?? '',
+                'phone' => $this->data['phone'] ?? '',
                 'message' => $this->data['message'] ?? '',
-            ],
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+            ]);
     }
 }

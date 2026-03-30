@@ -11,6 +11,8 @@ You have received a new contact form submission from your website.
 
 **Email:** {{ $email }}
 
+**Phone:** {{ $phone }}
+
 **Message:**
 
 {!! nl2br(e($message)) !!}
