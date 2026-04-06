@@ -39,7 +39,7 @@
                         </ul>
                     </nav><!-- /.main-header__nav -->
                     <div class="main-header__right__right">
-                        <div class="mobile-nav__btn mobile-nav__toggler">
+                        <div class="mobile-nav__btn mobile-nav__toggler me-4">
                             <span></span>
                             <span></span>
                             <span></span>
