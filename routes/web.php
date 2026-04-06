@@ -41,6 +41,11 @@ Route::get('/media/{path}', [PublicStorageController::class, 'show'])
     ->where('path', '.*')
     ->name('media.public');
 
+// Backward-compatible aliases for admin URLs
+Route::redirect('/queue-health', '/admin/queue-health', 301);
+Route::redirect('/logs', '/admin/logs', 301);
+Route::redirect('/amdin/logs', '/admin/logs', 301);
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function (HomeController $homeController) {
