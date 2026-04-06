@@ -504,19 +504,21 @@ document.addEventListener('DOMContentLoaded', function() {
                         @csrf
                         <div class="fly-one__form__group" style="width: 100%;">
                             <input type="text" name="name" placeholder="Your Name" value="{{ old('name') }}" required
-                                class="fly-one__form__input">
+                                class="fly-one__form__input form-control">
                         </div>
                         <div class="fly-one__form__group" style="width: 100%;">
                             <input type="email" name="email" placeholder="Your Email" value="{{ old('email') }}"
-                                required class="fly-one__form__input">
+                                required class="fly-one__form__input form-control">
                         </div>
                         <div class="fly-one__form__group" style="width: 100%;">
                             <input type="tel" name="phone" placeholder="Phone Number (e.g. +14165551234)"
-                                class="fly-one__form__input" inputmode="tel" value="{{ old('phone') }}" required>
+                                class="fly-one__form__input form-control" inputmode="tel" value="{{ old('phone') }}"
+                                required>
                         </div>
                         <div class="fly-one__form__group" style="width: 100%;">
-                            <textarea name="message" placeholder="Your Message" rows="4" class="fly-one__form__textarea"
-                                minlength="10" required>{{ old('message') }}</textarea>
+                            <textarea name="message" placeholder="Your Message" rows="4"
+                                class="fly-one__form__textarea form-control" minlength="10"
+                                required>{{ old('message') }}</textarea>
                         </div>
                         <div class="fly-one__form__group">
                             <button type="submit" class="visanet-btn">
@@ -539,75 +541,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <img src="assets/images/shapes/fly-shape-1-1.png" alt="fly shape" class="fly-one__shape-1 airplane-animated">
     <div class="fly-one__shape-2"></div>
 </section><!-- /.fly-one -->
-
-<section class="home-testimonials section-space-b">
-    <div class="container">
-        <div class="sec-title sec-title--center">
-            <div class="sec-title__top" style="padding-top:20px;" data-aos="fade-down"
-                data-aos-anchor-placement="top-bottom" data-aos-duration="1500">
-                <span class="sec-title__icon sec-title__icon--left"><i class="icon-airplane"></i></span>
-                <br>
-                <br>
-                <p class="sec-title__tagline pt6">Our Testimonials </p>
-                <span class="sec-title__icon sec-title__icon--right"><i class="icon-airplane-2"></i></span>
-            </div><!-- /.sec-title__top -->
-            <h2 class="sec-title__title bw-split-in-right">Let's Explore What People Say <br> About Our Services </h2>
-            <br>
-            <!-- /.sec-title__title -->
-        </div><!-- /.sec-title -->
-
-        <div class="home-testimonials__carousel visanet-owl__carousel visanet-owl__carousel--basic-nav owl-carousel owl-theme"
-            data-owl-options='{
-                "items": 1,
-                "margin": 24,
-                "loop": true,
-                "smartSpeed": 700,
-                "nav": false,
-                "dots": true,
-                "autoplay": true,
-                "responsive": {
-                    "0": {"items": 1},
-                    "768": {"items": 2},
-                    "1200": {"items": 3}
-                }
-            }'>
-            @foreach($homeTestimonials as $testimonial)
-            <div class="home-testimonials__item" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
-                data-aos-duration="1300" data-aos-delay="{{ 100 + (($loop->index % 3) * 100) }}">
-                @php
-                $avatarBgClasses = ['bg-primary', 'bg-success', 'bg-danger', 'bg-secondary', 'bg-dark'];
-                $avatarClass = $avatarBgClasses[$loop->index % count($avatarBgClasses)];
-                $avatarInitial = strtoupper(substr(trim($testimonial['name']), 0, 1));
-                @endphp
-                <div class="home-testimonials__stars mb-3">
-                    <span class="text-warning">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </span>
-                </div>
-                <p class="home-testimonials__text mb-4">"{{ $testimonial['text'] }}"</p>
-                <div class="home-testimonials__bottom">
-                    <div class="home-testimonials__author">
-                        <div class="home-testimonials__avatar-wrapper">
-                            <div
-                                class="home-testimonials__avatar-img {{ $avatarClass }} d-flex align-items-center justify-content-center text-white fw-bold">
-                                {{ $avatarInitial }}
-                            </div>
-                        </div>
-                        <div>
-                            <h3 class="home-testimonials__name">{{ $testimonial['name'] }}</h3>
-                            <p class="home-testimonials__category">{{ $testimonial['category'] }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section><!-- /.home-testimonials -->
 
 <section class="funfact section-space-b">
     <div class="container">
@@ -687,6 +620,75 @@ document.addEventListener('DOMContentLoaded', function() {
         </div><!-- /.row -->
     </div><!-- /.container -->
 </section><!-- /.funfact -->
+
+<section class="home-testimonials section-space-b py-5">
+    <div class="container">
+        <div class="sec-title sec-title--center">
+            <div class="sec-title__top" style="padding-top:20px;" data-aos="fade-down"
+                data-aos-anchor-placement="top-bottom" data-aos-duration="1500">
+                <span class="sec-title__icon sec-title__icon--left"><i class="icon-airplane"></i></span>
+                <br>
+                <br>
+                <p class="sec-title__tagline pt6">Our Testimonials </p>
+                <span class="sec-title__icon sec-title__icon--right"><i class="icon-airplane-2"></i></span>
+            </div><!-- /.sec-title__top -->
+            <h2 class="sec-title__title bw-split-in-right">Let's Explore What People Say <br> About Our Services </h2>
+            <br>
+            <!-- /.sec-title__title -->
+        </div><!-- /.sec-title -->
+
+        <div class="home-testimonials__carousel visanet-owl__carousel visanet-owl__carousel--basic-nav owl-carousel owl-theme"
+            data-owl-options='{
+                "items": 1,
+                "margin": 24,
+                "loop": true,
+                "smartSpeed": 700,
+                "nav": false,
+                "dots": true,
+                "autoplay": true,
+                "responsive": {
+                    "0": {"items": 1},
+                    "768": {"items": 2},
+                    "1200": {"items": 3}
+                }
+            }'>
+            @foreach($homeTestimonials as $testimonial)
+            <div class="home-testimonials__item" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
+                data-aos-duration="1300" data-aos-delay="{{ 100 + (($loop->index % 3) * 100) }}">
+                @php
+                $avatarBgClasses = ['bg-primary', 'bg-success', 'bg-danger', 'bg-secondary', 'bg-dark'];
+                $avatarClass = $avatarBgClasses[$loop->index % count($avatarBgClasses)];
+                $avatarInitial = strtoupper(substr(trim($testimonial['name']), 0, 1));
+                @endphp
+                <div class="home-testimonials__stars mb-3">
+                    <span class="text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </span>
+                </div>
+                <p class="home-testimonials__text mb-4">"{{ $testimonial['text'] }}"</p>
+                <div class="home-testimonials__bottom">
+                    <div class="home-testimonials__author">
+                        <div class="home-testimonials__avatar-wrapper">
+                            <div
+                                class="home-testimonials__avatar-img {{ $avatarClass }} d-flex align-items-center justify-content-center text-white fw-bold">
+                                {{ $avatarInitial }}
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="home-testimonials__name">{{ $testimonial['name'] }}</h3>
+                            <p class="home-testimonials__category">{{ $testimonial['category'] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section><!-- /.home-testimonials -->
 
 <!-- /.licenses-certifications -->
 <section class="licenses-certifications section-space-b"

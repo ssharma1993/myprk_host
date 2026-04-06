@@ -96,93 +96,93 @@
 </div>
 
 <style>
-    .testimonial-card {
-        transition: all 0.3s ease;
-        border: none;
-        border-radius: 8px;
-        min-height: 420px;
-        display: flex;
-        flex-direction: column;
-    }
+.testimonial-card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 8px;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+}
 
-    .testimonial-card .card-body {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
+.testimonial-card .card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 
-    .testimonial-card .mb-3 {
-        flex-shrink: 0;
-    }
+.testimonial-card .mb-3 {
+    flex-shrink: 0;
+}
 
-    .testimonial-card .card-text {
-        min-height: 250px;
-        flex-shrink: 0;
-        display: -webkit-box;
-        -webkit-line-clamp: 6;
-        line-clamp: 6;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+.testimonial-card .card-text {
+    min-height: 250px;
+    flex-shrink: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
-    .testimonial-card .d-flex {
-        flex-shrink: 0;
-        margin-top: auto;
-    }
+.testimonial-card .d-flex {
+    flex-shrink: 0;
+    margin-top: auto;
+}
 
-    .testimonial-avatar-initial {
-        width: 50px;
-        height: 50px;
-        font-size: 18px;
-        line-height: 1;
-    }
+.testimonial-avatar-initial {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    line-height: 1;
+}
 
-    .testimonial-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
-    }
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
 
-    .stat-box {
-        padding: 30px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 10px;
-        color: white;
-        transition: transform 0.3s ease;
-    }
+.stat-box {
+    padding: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    color: white;
+    transition: transform 0.3s ease;
+}
 
-    .stat-box:hover {
-        transform: translateY(-5px);
-    }
+.stat-box:hover {
+    transform: translateY(-5px);
+}
 
-    .stat-box h3 {
-        color: white;
-    }
+.stat-box h3 {
+    color: white;
+}
 
-    .cta-section {
-        background-color: #1d253a;
-        position: relative;
-        overflow: hidden;
-        padding: 60px 40px !important;
-        border-radius: 8px;
-    }
+.cta-section {
+    background-color: #1d253a;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 40px !important;
+    border-radius: 8px;
+}
 
-    .cta-section__title {
-        font-weight: 600;
-        font-size: 32px;
-        color: white;
-        margin: 0 0 15px;
-    }
+.cta-section__title {
+    font-weight: 600;
+    font-size: 32px;
+    color: white;
+    margin: 0 0 15px;
+}
 
-    .cta-section__description {
-        font-size: 16px;
-        color: rgba(255, 255, 255, 0.9);
-        line-height: 1.6;
-        max-width: 800px;
-        margin: 0 auto 30px;
-    }
+.cta-section__description {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
 
-    .fa-star {
-        font-size: 0.9rem;
-    }
+.fa-star {
+    font-size: 0.9rem;
+}
 </style>
 @endsection
