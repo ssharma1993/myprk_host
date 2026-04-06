@@ -62,7 +62,7 @@ $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ';
 
 return response($xml, 200)
 ->header('Content-Type', 'application/xml; charset=UTF-8')
-->header('Cache-Control', 'public, max-age=86400');
+->header('Cache-Control', 'public, max-age=300, must-revalidate');
 }
 
 public function robots(): Response
@@ -89,6 +89,6 @@ $content = implode("\n", [
 
 return response($content, 200)
 ->header('Content-Type', 'text/plain; charset=UTF-8')
-->header('Cache-Control', 'public, max-age=86400');
+->header('Cache-Control', 'public, max-age=300, must-revalidate');
 }
 }
