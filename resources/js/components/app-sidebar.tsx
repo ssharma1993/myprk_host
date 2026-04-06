@@ -21,8 +21,10 @@ import {
     LayoutList,
     LayoutPanelLeft,
     Link as LinkIcon,
+    MapPin,
     SearchCheck,
     Server,
+    Zap,
 } from 'lucide-react';
 import AppLogo from './app-logo';
 
@@ -63,6 +65,11 @@ const mainNavItems: NavItem[] = [
         icon: LinkIcon,
     },
     {
+        title: 'Office Locations',
+        href: '/admin/office-locations',
+        icon: MapPin,
+    },
+    {
         title: 'Queue Health',
         href: '/queue-health',
         icon: Server,
@@ -71,6 +78,11 @@ const mainNavItems: NavItem[] = [
         title: 'Logs',
         href: '/logs',
         icon: FileText,
+    },
+    {
+        title: 'Cache',
+        href: '/admin/cache',
+        icon: Zap,
     },
 ];
 

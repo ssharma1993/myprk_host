@@ -62,8 +62,36 @@
                     </ul>
                     <br />
                     <br />
+                    @if(isset($officeLocations) && $officeLocations->count() > 0)
+                    <div class="footer-office-locations">
+                        <h3 class="footer-office-locations__title">Our Locations</h3>
+                        @foreach($officeLocations as $officeLocation)
+                        <div class="footer-office-location">
+                            <h4 class="footer-office-location__name">{{ $officeLocation->name }}</h4>
+                            <div class="footer-office-location__address">{!! nl2br(e($officeLocation->address)) !!}
+                            </div>
+                            <div class="footer-office-location__map">
+                                <iframe src="{{ $officeLocation->google_map_embed_url }}" width="100%" height="180"
+                                    style="border:0;" allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                            @if(!empty($officeLocation->google_map_url))
+                            <a href="{{ $officeLocation->google_map_url }}" target="_blank" rel="noopener noreferrer"
+                                class="footer-office-location__link">Open in Google Maps</a>
+                            @endif
+                        </div>
+                        @endforeach
+                    </div>
+                    <br />
+                    @endif
+
                     <div class="footer-widget__image">
-                        <img src="{{ asset('rcic.png') }}" alt="RCIC" width="100" style="width: 100%;">
+                        <img src="{{ asset('images/RCIC-IRB_EN_HORZ_CLR_POS.png') }}" alt="RCIC" width="100"
+                            style="width: 100%;">
+                    </div>
+                    <div class="footer-widget__image">
+                        <img src="{{ asset('images/CICC_EF_HORZ_CLR_POS_TMMC_1000x326.webp') }}" alt="CICC" width="100"
+                            style="width: 100%;">
                     </div>
                 </div><!-- /.footer-widget -->
             </div><!-- /.col-lg-3 -->
@@ -76,14 +104,69 @@
                 <p class="main-footer__copyright">&copy; Copyright <span class="dynamic-year"></span> by PRK Immigration
                 </p>
                 <ul class="main-footer__page list-unstyled">
-                    <li><a href="{{ url('/about') }}">Privacy</a></li>
-                    <li><a href="{{ url('/about') }}">Policy</a></li>
+                    <li><a href="{{ route('privacy-policy') }}">Privacy Policy</a></li>
+                    <li><a href="{{ route('terms-and-conditions') }}">Terms and Conditions</a></li>
                     <li><a href="{{ url('/contact') }}">Contact Us</a></li>
                 </ul><!-- /.main-footer__page -->
             </div><!-- /.main-footer__inner -->
         </div><!-- /.container -->
     </div><!-- /.main-footer__bottom -->
 </footer>
+
+<style>
+.footer-office-locations {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.footer-office-locations__title {
+    margin: 0;
+    color: #0046a1;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.footer-office-location {
+    padding: 16px;
+    border: 1px solid #dbeafe;
+    border-radius: 10px;
+    background: #f8fbff;
+}
+
+.footer-office-location__name {
+    margin: 0 0 8px;
+    color: #0046a1;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.footer-office-location__address {
+    margin-bottom: 12px;
+    color: #1a1a1a;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.footer-office-location__map {
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.footer-office-location__link {
+    display: inline-flex;
+    align-items: center;
+    color: #0046a1;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.footer-office-location__link:hover {
+    color: #003d8a;
+}
+</style>
 
 <!-- mobile nav, search popup and other page-level widgets (from the original template) -->
 <div class="mobile-nav__wrapper">

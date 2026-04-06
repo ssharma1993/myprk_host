@@ -3,6 +3,13 @@
 namespace App\Providers;
 
 use App\Models\SocialLink;
+use App\Models\OfficeLocation;
+use App\Models\Service;
+use App\Models\Gallery;
+use App\Models\Sponsor;
+use App\Observers\ServiceObserver;
+use App\Observers\GalleryObserver;
+use App\Observers\SponsorObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
@@ -23,16 +30,28 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Register model observers for cache invalidation
+        Service::observe(ServiceObserver::class);
+        Gallery::observe(GalleryObserver::class);
+        Sponsor::observe(SponsorObserver::class);
+
         $socialLinks = collect();
+        $officeLocations = collect();
 
         try {
             if (Schema::hasTable('social_links')) {
                 $socialLinks = SocialLink::getCachedForView();
             }
+
+            if (Schema::hasTable('office_locations')) {
+                $officeLocations = OfficeLocation::getCachedForView();
+            }
         } catch (Throwable $exception) {
             $socialLinks = collect();
+            $officeLocations = collect();
         }
 
         View::share('socialLinks', $socialLinks);
+        View::share('officeLocations', $officeLocations);
     }
 }

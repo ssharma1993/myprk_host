@@ -35,7 +35,6 @@
                         </li>
                         <li><a href="{{ url('/portfolio') }}">Portfolio</a></li>
                         <li><a href="{{ url('/testimonials') }}">Testimonials</a></li>
-                        <li><a href="{{ url('/resources') }}">Resources</a></li>
                         <li><a href="{{ url('/contact') }}">Contact Us</a></li>
                         </ul>
                     </nav><!-- /.main-header__nav -->

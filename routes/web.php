@@ -12,6 +12,8 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\CacheController;
+use App\Http\Controllers\OfficeLocationController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SocialLinkController;
 use App\Http\Controllers\PublicStorageController;
@@ -23,8 +25,9 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'storeContact'])->name('contact.store')->middleware('throttle:5,1');
 Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
 Route::get('/testimonials', [HomeController::class, 'testimonials'])->name('testimonials');
-Route::get('/resources', [HomeController::class, 'resources'])->name('resources');
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery.public');
+Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('/terms-and-conditions', [HomeController::class, 'termsAndConditions'])->name('terms-and-conditions');
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe')->middleware('throttle:5,1');
 Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
 
@@ -75,6 +78,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/social-links', [SocialLinkController::class, 'index'])->name('social-links.index');
     Route::post('/admin/social-links', [SocialLinkController::class, 'update'])->name('social-links.update');
 
+    // Office Locations Routes
+    Route::get('/admin/office-locations', [OfficeLocationController::class, 'index'])->name('office-locations.index');
+    Route::post('/admin/office-locations', [OfficeLocationController::class, 'update'])->name('office-locations.update');
+
     // Newsletter Routes
     Route::get('/admin/newsletter', [NewsletterController::class, 'index'])->name('newsletter.index');
     Route::get('/admin/newsletter/preview', [NewsletterController::class, 'preview'])->name('newsletter.preview');
@@ -95,6 +102,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/logs', [LogController::class, 'index'])->name('logs.index');
     Route::post('/admin/logs/clear', [LogController::class, 'clear'])->name('logs.clear');
     Route::get('/admin/logs/download', [LogController::class, 'download'])->name('logs.download');
+
+    // Cache Routes
+    Route::get('/admin/cache', [CacheController::class, 'index'])->name('cache.index');
+    Route::post('/admin/cache/clear-all', [CacheController::class, 'clearAll'])->name('cache.clear-all');
+    Route::post('/admin/cache/clear/{type}', [CacheController::class, 'clear'])->name('cache.clear');
+    Route::post('/admin/cache/warm/{type?}', [CacheController::class, 'warm'])->name('cache.warm');
+    Route::get('/admin/cache/stats', [CacheController::class, 'stats'])->name('cache.stats');
 });
 
 require __DIR__ . '/settings.php';

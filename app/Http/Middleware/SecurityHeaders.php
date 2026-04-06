@@ -75,9 +75,13 @@ class SecurityHeaders
                 . " https://www.google-analytics.com"
                 . " https://analytics.google.com"
                 . " https://www.googletagmanager.com",
-            // Frames: only same origin (Google Tag Manager noscript iframe)
+            // Frames: same origin + trusted third-party embeds
             "frame-src 'self'"
-                . " https://www.googletagmanager.com",
+                . " https://www.googletagmanager.com"
+                . " https://www.google.com"
+                . " https://maps.google.com"
+                . " https://*.google.com"
+                . " https://*.google.ca",
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",

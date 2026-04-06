@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\SecurityHeaders;
+use App\Http\Middleware\CacheControl;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
@@ -50,6 +51,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         ConvertEmptyStringsToNull::class,
         SecurityHeaders::class,
+        CacheControl::class,
     ];
 
     /**

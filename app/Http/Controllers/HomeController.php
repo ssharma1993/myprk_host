@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\Sponsor;
 use App\Providers\HomeTestimonialsProvider;
 use App\Services\ContactFormService;
+use App\Services\CacheService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -22,15 +23,9 @@ class HomeController extends Controller
     public function __construct(HomeTestimonialsProvider $homeTestimonialsProvider)
     {
         $this->homeTestimonialsProvider = $homeTestimonialsProvider;
-        $this->services = Service::with('children')
-            ->whereNull('parent_id')
-            ->orderBy('display_order', 'asc')
-            ->orderBy('created_at', 'desc')
-            ->get();
-        $this->featuredServices = Service::whereNotNull('parent_id')
-            ->orderBy('parent_id', 'asc')
-            ->orderBy('display_order', 'asc')
-            ->get();
+        // Use caching for services to reduce database hits
+        $this->services = CacheService::getServices();
+        $this->featuredServices = CacheService::getFeaturedServices();
         view()->share('services', $this->services);
         view()->share('featuredServices', $this->featuredServices);
     }
@@ -41,8 +36,9 @@ class HomeController extends Controller
     public function index()
     {
         // return Inertia::render('home');
-        $galleries = Gallery::orderBy('display_order', 'asc')->get();
-        $sponsors = Sponsor::orderBy('display_order', 'asc')->get();
+        // Use caching for frequently accessed data
+        $galleries = CacheService::getGalleries();
+        $sponsors = CacheService::getSponsors();
         $homeTestimonials = $this->homeTestimonialsProvider->all();
         $this->incrementVisitorCount();
 
@@ -152,14 +148,10 @@ class HomeController extends Controller
         return view('testimonials', compact('homeTestimonials'));
     }
 
-    public function resources()
-    {
-        return view('resources');
-    }
-
     public function gallery()
     {
-        $galleries = Gallery::orderBy('display_order', 'asc')->get();
+        // Use cached galleries
+        $galleries = CacheService::getGalleries();
         return view('gallery.index', compact('galleries'));
     }
 
@@ -177,5 +169,15 @@ class HomeController extends Controller
         }
 
         return view('service', compact('service', 'childServices'));
+    }
+
+    public function privacyPolicy()
+    {
+        return view('privacy-policy');
+    }
+
+    public function termsAndConditions()
+    {
+        return view('terms-and-conditions');
     }
 }
