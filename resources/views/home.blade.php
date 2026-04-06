@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div><!-- /.hero-slider-two__bg-1 -->
             <div class="hero-slider-two__bg-2">
                 <div class="hero-slider-two__bg-2__inner"
-                    style="background-image: url(assets/images/backgrounds/hero-slider-bg-2-3.jpg);"></div>
+                    style="background-image: url(assets/images/backgrounds/toronto1.png);"></div>
 
                 <img src="assets/images/shapes/hero-slider-shape-2-3.png" alt="shape" class="hero-slider-two__shape-2">
                 <img src="assets/images/shapes/hero-slider-shape-2-4.png" alt="shape" class="hero-slider-two__shape-3">
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         class="hero-slider-two__title__shape-1"><img
                                             src="assets/images/shapes/hero-slider-shape-2-2.png" alt="shape"></span>
                                     <span class="hero-slider-two__title__shape-2"></span> <span
-                                        class="hero-slider-two__title__highlight"></span>Immigration</span>
+                                        class="hero-slider-two__title__highlight">Immigration</span></span>
                                 Consultants
                             </h2>
                             <div class="hero-slider-two__description">
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div><!-- /.hero-slider-two__bg-1 -->
             <div class="hero-slider-two__bg-2">
                 <div class="hero-slider-two__bg-2__inner"
-                    style="background-image: url(assets/images/backgrounds/hero-slider-bg-2-4.jpg);"></div>
+                    style="background-image: url(assets/images/backgrounds/banff.png);"></div>
 
                 <img src="assets/images/shapes/hero-slider-shape-2-3.png" alt="shape" class="hero-slider-two__shape-2">
                 <img src="assets/images/shapes/hero-slider-shape-2-4.png" alt="shape" class="hero-slider-two__shape-3">
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <span class="visanet-btn__icon"><span><i
                                                     class="icon-arrow-right-3"></i></span></span>
                                     </span>
-                                    <span class="visanet-btn__text">Book Free Consultation</span>
+                                    <span class="visanet-btn__text">Book Consultation</span>
                                 </a>
                             </div>
                         </div><!-- /.hero-slider-two__content -->
@@ -196,9 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p class="sec-title__tagline">Our Services </p>
                 <span class="sec-title__icon sec-title__icon--right"><i class="icon-airplane-2"></i></span>
             </div><!-- /.sec-title__top -->
-            <h2 class="sec-title__title bw-split-in-right">Service We Provide
-                Explore Our Visa Citizenship &
-                Immigration Services <br></h2>
+            <h2 class="sec-title__title bw-split-in-right">Explore our Immigration and Citizenship Services<br></h2>
             <br>
             <!-- /.sec-title__title -->
         </div><!-- /.sec-title -->
@@ -553,9 +551,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p class="sec-title__tagline pt6">Our Testimonials </p>
                 <span class="sec-title__icon sec-title__icon--right"><i class="icon-airplane-2"></i></span>
             </div><!-- /.sec-title__top -->
-            <h2 class="sec-title__title bw-split-in-right">Let's Explore What People Say <br> About Our Services<< /h2>
-                    <br>
-                    <!-- /.sec-title__title -->
+            <h2 class="sec-title__title bw-split-in-right">Let's Explore What People Say <br> About Our Services </h2>
+            <br>
+            <!-- /.sec-title__title -->
         </div><!-- /.sec-title -->
 
         <div class="home-testimonials__carousel visanet-owl__carousel visanet-owl__carousel--basic-nav owl-carousel owl-theme"
