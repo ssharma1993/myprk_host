@@ -574,6 +574,11 @@ document.addEventListener('DOMContentLoaded', function() {
             @foreach($homeTestimonials as $testimonial)
             <div class="home-testimonials__item" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
                 data-aos-duration="1300" data-aos-delay="{{ 100 + (($loop->index % 3) * 100) }}">
+                @php
+                $avatarBgClasses = ['bg-primary', 'bg-success', 'bg-danger', 'bg-secondary', 'bg-dark'];
+                $avatarClass = $avatarBgClasses[$loop->index % count($avatarBgClasses)];
+                $avatarInitial = strtoupper(substr(trim($testimonial['name']), 0, 1));
+                @endphp
                 <div class="home-testimonials__stars mb-3">
                     <span class="text-warning">
                         <i class="fas fa-star"></i>
@@ -587,11 +592,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="home-testimonials__bottom">
                     <div class="home-testimonials__author">
                         <div class="home-testimonials__avatar-wrapper">
-                            <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}"
-                                class="home-testimonials__avatar-img"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="home-testimonials__avatar-fallback" style="display: none;">
-                                {{ strtoupper(substr($testimonial['name'], 0, 1)) }}
+                            <div
+                                class="home-testimonials__avatar-img {{ $avatarClass }} d-flex align-items-center justify-content-center text-white fw-bold">
+                                {{ $avatarInitial }}
                             </div>
                         </div>
                         <div>

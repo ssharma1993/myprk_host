@@ -17,6 +17,11 @@
         <div class="row g-4">
             @foreach($homeTestimonials as $testimonial)
             <div class="col-lg-4 col-md-6 mb-4">
+                @php
+                $avatarBgClasses = ['bg-primary', 'bg-success', 'bg-danger', 'bg-secondary', 'bg-dark'];
+                $avatarClass = $avatarBgClasses[$loop->index % count($avatarBgClasses)];
+                $avatarInitial = strtoupper(substr(trim($testimonial['name']), 0, 1));
+                @endphp
                 <div class="card h-100 shadow-sm testimonial-card">
                     <div class="card-body">
                         <div class="mb-3">
@@ -36,11 +41,9 @@
 
                         <div class="d-flex align-items-center">
                             <div class="testimonial-avatar-wrapper me-3">
-                                <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}"
-                                    class="rounded-circle testimonial-avatar-img" width="50" height="50"
-                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                <div class="testimonial-avatar-fallback" style="display: none;">
-                                    {{ strtoupper(substr($testimonial['name'], 0, 1)) }}
+                                <div
+                                    class="rounded-circle testimonial-avatar-initial {{ $avatarClass }} d-flex align-items-center justify-content-center text-white fw-bold">
+                                    {{ $avatarInitial }}
                                 </div>
                             </div>
                             <div>
@@ -125,6 +128,13 @@
     .testimonial-card .d-flex {
         flex-shrink: 0;
         margin-top: auto;
+    }
+
+    .testimonial-avatar-initial {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+        line-height: 1;
     }
 
     .testimonial-card:hover {
