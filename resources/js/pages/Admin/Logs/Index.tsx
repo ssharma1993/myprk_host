@@ -31,7 +31,7 @@ interface LogsIndexProps {
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Logs',
-        href: '/admin/logs',
+        href: '/logs',
     },
 ];
 
@@ -65,12 +65,12 @@ export default function LogsIndex({
                 'Are you sure you want to clear all log files? This action cannot be undone.',
             )
         ) {
-            router.post('/admin/logs/clear');
+            router.post('/logs/clear');
         }
     };
 
     const handleDownload = (filePath: string) => {
-        window.location.href = `/admin/logs/download?file=${filePath}`;
+        window.location.href = `/logs/download?file=${filePath}`;
     };
 
     const startEntry = (currentPage - 1) * perPage + 1;
@@ -226,7 +226,7 @@ export default function LogsIndex({
                                     <Link
                                         href={
                                             currentPage > 1
-                                                ? `/admin/logs?page=${currentPage - 1}`
+                                                ? `/logs?page=${currentPage - 1}`
                                                 : '#'
                                         }
                                         className={`inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium ${
@@ -254,7 +254,7 @@ export default function LogsIndex({
                                             .map((page) => (
                                                 <Link
                                                     key={page}
-                                                    href={`/admin/logs?page=${page}`}
+                                                    href={`/logs?page=${page}`}
                                                     className={`rounded px-3 py-1.5 text-sm font-medium ${
                                                         page === currentPage
                                                             ? 'bg-blue-600 text-white'
@@ -269,7 +269,7 @@ export default function LogsIndex({
                                     <Link
                                         href={
                                             currentPage < lastPage
-                                                ? `/admin/logs?page=${currentPage + 1}`
+                                                ? `/logs?page=${currentPage + 1}`
                                                 : '#'
                                         }
                                         className={`inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium ${

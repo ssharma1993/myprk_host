@@ -13,7 +13,7 @@ interface QueueHealthProps {
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Queue Health',
-        href: '/admin/queue-health',
+        href: '/queue-health',
     },
 ];
 
@@ -86,14 +86,14 @@ export default function QueueHealth({
                     <div className="mt-6 flex gap-3">
                         <button
                             type="button"
-                            onClick={() => router.post('/admin/queue-run')}
+                            onClick={() => router.post('/queue-run')}
                             className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
                         >
                             Run Queued Emails
                         </button>
                         <button
                             type="button"
-                            onClick={() => router.get('/admin/queue-health')}
+                            onClick={() => router.get('/queue-health')}
                             className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
                         >
                             Refresh

@@ -64,12 +64,12 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Queue Health',
-        href: '/admin/queue-health',
+        href: '/queue-health',
         icon: Server,
     },
     {
         title: 'Logs',
-        href: '/admin/logs',
+        href: '/logs',
         icon: FileText,
     },
 ];

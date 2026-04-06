@@ -41,12 +41,6 @@ Route::get('/media/{path}', [PublicStorageController::class, 'show'])
     ->where('path', '.*')
     ->name('media.public');
 
-// Backward-compatible aliases for admin URLs
-Route::redirect('/queue-health', '/admin/queue-health', 301);
-Route::redirect('/logs', '/admin/logs', 301);
-Route::redirect('/amdin/logs', '/admin/logs', 301);
-
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function (HomeController $homeController) {
         return Inertia::render('dashboard', [
@@ -88,10 +82,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/admin/newsletter/subscribers/{subscriber}', [NewsletterController::class, 'destroy'])->name('newsletter.subscribers.destroy');
 
     // Queue Routes
+    Route::get('/queue-health', [QueueController::class, 'health'])->name('queue.health.short');
+    Route::post('/queue-run', [QueueController::class, 'run'])->name('queue.run.short');
     Route::get('/admin/queue-health', [QueueController::class, 'health'])->name('queue.health');
     Route::post('/admin/queue-run', [QueueController::class, 'run'])->name('queue.run');
 
     // Logs Routes
+    Route::redirect('/amdin/logs', '/admin/logs', 301);
+    Route::get('/logs', [LogController::class, 'index'])->name('logs.index.short');
+    Route::post('/logs/clear', [LogController::class, 'clear'])->name('logs.clear.short');
+    Route::get('/logs/download', [LogController::class, 'download'])->name('logs.download.short');
     Route::get('/admin/logs', [LogController::class, 'index'])->name('logs.index');
     Route::post('/admin/logs/clear', [LogController::class, 'clear'])->name('logs.clear');
     Route::get('/admin/logs/download', [LogController::class, 'download'])->name('logs.download');

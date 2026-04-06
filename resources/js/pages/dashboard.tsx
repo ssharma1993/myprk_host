@@ -52,7 +52,7 @@ export default function Dashboard({ visitorCount }: DashboardProps) {
                             </p>
                             <button
                                 type="button"
-                                onClick={() => router.post('/admin/queue-run')}
+                                onClick={() => router.post('/queue-run')}
                                 className="mt-3 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
                             >
                                 Run Queued Emails
