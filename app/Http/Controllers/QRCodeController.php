@@ -15,38 +15,56 @@ class QRCodeController extends Controller
 {
     private function getWriter($format)
     {
-        return match ($format) {
-            'svg' => new SvgWriter(),
-            'png' => new PngWriter(),
-            'jpeg' => new PngWriter(), // Use PNG as source for JPEG conversion
-            'gif' => new GifWriter(),
-            'webp' => new WebPWriter(),
-            default => throw new \InvalidArgumentException('Unsupported format'),
-        };
+        switch ($format) {
+            case 'svg':
+                return new SvgWriter();
+            case 'png':
+                return new PngWriter();
+            case 'jpeg':
+                return new PngWriter();
+            case 'gif':
+                return new GifWriter();
+            case 'webp':
+                return new WebPWriter();
+            default:
+                throw new \InvalidArgumentException('Unsupported format');
+        }
     }
 
     private function getMimeType($format)
     {
-        return match ($format) {
-            'svg' => 'image/svg+xml',
-            'png' => 'image/png',
-            'jpeg' => 'image/jpeg',
-            'gif' => 'image/gif',
-            'webp' => 'image/webp',
-            default => throw new \InvalidArgumentException('Unsupported format'),
-        };
+        switch ($format) {
+            case 'svg':
+                return 'image/svg+xml';
+            case 'png':
+                return 'image/png';
+            case 'jpeg':
+                return 'image/jpeg';
+            case 'gif':
+                return 'image/gif';
+            case 'webp':
+                return 'image/webp';
+            default:
+                throw new \InvalidArgumentException('Unsupported format');
+        }
     }
 
     private function getExtension($format)
     {
-        return match ($format) {
-            'svg' => '.svg',
-            'png' => '.png',
-            'jpeg' => '.jpg',
-            'gif' => '.gif',
-            'webp' => '.webp',
-            default => throw new \InvalidArgumentException('Unsupported format'),
-        };
+        switch ($format) {
+            case 'svg':
+                return '.svg';
+            case 'png':
+                return '.png';
+            case 'jpeg':
+                return '.jpg';
+            case 'gif':
+                return '.gif';
+            case 'webp':
+                return '.webp';
+            default:
+                throw new \InvalidArgumentException('Unsupported format');
+        }
     }
 
     private function convertPngToJpeg($pngContent)
@@ -84,10 +102,10 @@ class QRCodeController extends Controller
 
             // Create QR code
             $qrCode = new QrCode(
-                data: $input,
-                errorCorrectionLevel: ErrorCorrectionLevel::High,
-                size: 300,
-                margin: 10,
+                $input,
+                ErrorCorrectionLevel::High,
+                300,
+                10
             );
 
             $writer = $this->getWriter($format);
@@ -136,10 +154,10 @@ class QRCodeController extends Controller
             $format = $validated['format'];
 
             $qrCode = new QrCode(
-                data: $input,
-                errorCorrectionLevel: ErrorCorrectionLevel::High,
-                size: 300,
-                margin: 10,
+                $input,
+                ErrorCorrectionLevel::High,
+                300,
+                10
             );
 
             $writer = $this->getWriter($format);

@@ -11,6 +11,7 @@ use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\QueueController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SocialLinkController;
 use App\Http\Controllers\PublicStorageController;
@@ -84,6 +85,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Queue Routes
     Route::get('/admin/queue-health', [QueueController::class, 'health'])->name('queue.health');
     Route::post('/admin/queue-run', [QueueController::class, 'run'])->name('queue.run');
+
+    // Logs Routes
+    Route::get('/admin/logs', [LogController::class, 'index'])->name('logs.index');
+    Route::post('/admin/logs/clear', [LogController::class, 'clear'])->name('logs.clear');
+    Route::get('/admin/logs/download', [LogController::class, 'download'])->name('logs.download');
 });
 
 require __DIR__ . '/settings.php';

@@ -15,6 +15,7 @@ import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import {
     BookOpen,
+    FileText,
     Folder,
     LayoutGrid,
     LayoutList,
@@ -65,6 +66,11 @@ const mainNavItems: NavItem[] = [
         title: 'Queue Health',
         href: '/admin/queue-health',
         icon: Server,
+    },
+    {
+        title: 'Logs',
+        href: '/admin/logs',
+        icon: FileText,
     },
 ];
 
