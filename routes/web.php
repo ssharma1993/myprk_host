@@ -10,6 +10,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SeoController;
+use App\Http\Controllers\QueueController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SocialLinkController;
 use App\Http\Controllers\PublicStorageController;
@@ -79,6 +80,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/newsletter/preview', [NewsletterController::class, 'preview'])->name('newsletter.preview');
     Route::post('/admin/newsletter/send', [NewsletterController::class, 'send'])->name('newsletter.send');
     Route::delete('/admin/newsletter/subscribers/{subscriber}', [NewsletterController::class, 'destroy'])->name('newsletter.subscribers.destroy');
+
+    // Queue Routes
+    Route::get('/admin/queue-health', [QueueController::class, 'health'])->name('queue.health');
+    Route::post('/admin/queue-run', [QueueController::class, 'run'])->name('queue.run');
 });
 
 require __DIR__ . '/settings.php';

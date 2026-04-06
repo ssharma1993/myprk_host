@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Service;
+use App\Http\Requests\StoreContactRequest;
 use App\Models\Gallery;
+use App\Models\NewsletterSubscriber;
+use App\Models\Service;
 use App\Models\Sponsor;
 use App\Providers\HomeTestimonialsProvider;
 use App\Services\ContactFormService;
-use App\Http\Requests\StoreContactRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -111,14 +112,31 @@ class HomeController extends Controller
 
     public function storeContact(StoreContactRequest $request)
     {
+        $validated = $request->validated();
+
+        $subscriber = NewsletterSubscriber::firstOrNew([
+            'email' => $validated['email'],
+        ]);
+
+        $subscriber->fill([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'unsubscribe_token' => $subscriber->unsubscribe_token ?: Str::uuid()->toString(),
+            'is_active' => true,
+        ]);
+
+        $subscriber->save();
+
         $service = new ContactFormService();
 
-        if ($service->handleSubmission($request->validated())) {
-            return redirect()->route('contact')
+        if ($service->handleSubmission($validated)) {
+            return redirect()->back()
                 ->with('success', 'Thank you for your message! We will get back to you soon.');
         }
 
-        return redirect()->route('contact')
+        return redirect()->back()
+            ->withInput()
             ->with('error', 'There was an error sending your message. Please try again.');
     }
 

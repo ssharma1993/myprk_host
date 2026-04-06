@@ -28,8 +28,8 @@
     $customHead = $seo['custom_head_scripts'] ?? '';
     $customBody = $seo['custom_body_scripts'] ?? '';
     $socialProfileUrls = isset($socialLinks)
-        ? $socialLinks->pluck('url')->filter()->values()->all()
-        : [];
+    ? $socialLinks->pluck('url')->filter()->values()->all()
+    : [];
     @endphp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -116,14 +116,16 @@
 
     @if(!empty($socialProfileUrls))
     <script type="application/ld+json">
-    {!! json_encode([
-        '@context' => 'https://schema.org',
-        '@type' => 'Organization',
-        'name' => config('app.name', 'PRK Immigration'),
-        'url' => config('app.url'),
-        'logo' => $metaImage,
-        'sameAs' => $socialProfileUrls,
-    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    {
+        !!json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            'name' => config('app.name', 'PRK Immigration'),
+            'url' => config('app.url'),
+            'logo' => $metaImage,
+            'sameAs' => $socialProfileUrls,
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!
+    }
     </script>
     @endif
 
@@ -135,7 +137,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/vendors/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/vendors/bootstrap/css/dist/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/vendors/bootstrap-select/bootstrap-select.min.css" />
     <link rel="stylesheet" href="assets/vendors/aos/css/aos.css" />
     <link rel="stylesheet" href="assets/vendors/fontawesome/css/all.min.css" />
@@ -147,8 +149,6 @@
     <link rel="stylesheet" href="assets/vendors/slick/slick.css">
     <link rel="stylesheet" href="assets/vendors/owl-carousel/css/owl.carousel.min.css" />
     <link rel="stylesheet" href="assets/vendors/owl-carousel/css/owl.theme.default.min.css" />
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="assets/css/visanet.css" />
     @stack('head')
@@ -237,6 +237,33 @@
         @include('partials.footer')
     </div>
 
+    @if(session('success') || session('error'))
+    <div class="modal fade" id="flashMessageModal" tabindex="-1" aria-labelledby="flashMessageModalLabel"
+        data-auto-show="{{ session('success') || session('error') ? '1' : '0' }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="flashMessageModalLabel">
+                        {{ session('success') ? 'Success' : 'Error' }}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ session('success') ?? session('error') }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="visanet-btn" data-bs-dismiss="modal">
+                        <span class="visanet-btn__icon-box">
+                            <span class="visanet-btn__icon"><span><i class="icon-arrow-right-3"></i></span></span>
+                        </span>
+                        <span class="visanet-btn__text">OK</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <script src="assets/vendors/jquery/jquery-3.7.1.min.js"></script>
     <script src="assets/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
@@ -261,6 +288,28 @@
     <script src="assets/vendors/gsap/splittext.min.js"></script>
     <script src="assets/vendors/gsap/visanet-split.js"></script>
     <script src="assets/js/visanet.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        window.showFlashMessageModal = function() {
+            var flashModalElement = document.getElementById('flashMessageModal');
+            if (!flashModalElement || !window.bootstrap || !window.bootstrap.Modal) {
+                return null;
+            }
+
+            var flashModal = window.bootstrap.Modal.getOrCreateInstance(flashModalElement);
+            flashModal.show();
+            return flashModal;
+        };
+
+        var flashModalElement = document.getElementById('flashMessageModal');
+        var shouldAutoShowFlashModal = flashModalElement && flashModalElement.dataset.autoShow === '1';
+
+        if (shouldAutoShowFlashModal) {
+            window.showFlashMessageModal();
+        }
+    });
+    </script>
 
     @stack('scripts')
 

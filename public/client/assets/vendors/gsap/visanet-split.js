@@ -108,6 +108,8 @@
   }
 
   function video_image() {
+    if (!$('.video').length || !$('.video img').length) return;
+
     gsap.registerPlugin(ScrollTrigger);
     const tl = gsap.timeline({
       ease: "none",

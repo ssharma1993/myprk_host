@@ -12,7 +12,9 @@ class NewsletterSubscriber extends Model
      * @var array
      */
     protected $fillable = [
+        'name',
         'email',
+        'phone',
         'unsubscribe_token',
         'is_active',
     ];

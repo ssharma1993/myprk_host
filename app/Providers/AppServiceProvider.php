@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\SocialLink;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Schema;
+use Throwable;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,8 +23,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('*', function ($view) {
-            $view->with('socialLinks', SocialLink::getCachedForView());
-        });
+        $socialLinks = collect();
+
+        try {
+            if (Schema::hasTable('social_links')) {
+                $socialLinks = SocialLink::getCachedForView();
+            }
+        } catch (Throwable $exception) {
+            $socialLinks = collect();
+        }
+
+        View::share('socialLinks', $socialLinks);
     }
 }

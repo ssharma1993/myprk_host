@@ -19,7 +19,7 @@ class ContactFormService
         try {
             // Send email to contact email address
             Mail::to(config('company.email'))
-                ->send(new ContactFormMail($data));
+                ->queue(new ContactFormMail($data));
 
             return true;
         } catch (\Exception $e) {

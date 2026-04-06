@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewsletterMail;
 use App\Models\NewsletterSubscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -70,16 +71,13 @@ class NewsletterController extends Controller
         $subscribers = NewsletterSubscriber::where('is_active', true)->get();
 
         foreach ($subscribers as $subscriber) {
-            Mail::send('emails.newsletter', [
-                'content' => $data['content'],
-                'subscriber' => $subscriber,
-            ], function ($message) use ($subscriber, $data) {
-                $message->to($subscriber->email)->subject($data['subject']);
-            });
+            Mail::to($subscriber->email)->queue(
+                new NewsletterMail($data['subject'], $data['content'], $subscriber)
+            );
         }
 
         return redirect()->route('newsletter.index')
-            ->with('success', 'Email sent to ' . $subscribers->count() . ' subscribers.');
+            ->with('success', 'Email queued for ' . $subscribers->count() . ' subscribers.');
     }
 
     public function preview(Request $request)

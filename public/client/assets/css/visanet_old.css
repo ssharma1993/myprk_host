@@ -22649,7 +22649,7 @@ li:hover .product-details__list__icon {
 .fly-one__client {
     padding: 36px 30px;
     text-align: center;
-    background-color: var(--visanet-base, #e50c37);
+    /* background-color: var(--visanet-base, #e50c37); */
 }
 .fly-one__client__images {
     display: inline-flex;
@@ -23322,4 +23322,3 @@ body.boxed-wrapper .page-wrapper {
         right: -120px;
     }
 }
-/*# sourceMappingURL=visanet.css.map */

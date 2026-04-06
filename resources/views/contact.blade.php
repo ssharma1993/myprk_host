@@ -23,19 +23,7 @@
                 </div>
                 @endif
 
-                @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-                @endif
 
-                @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-                @endif
 
                 <form action="{{ route('contact.store') }}" method="post">
                     @csrf
@@ -56,7 +44,7 @@
                     <div class="mb-3">
                         <input class="form-control @error('phone') is-invalid @enderror" type="tel" name="phone"
                             placeholder="Your Phone Number (e.g. +14165551234)" value="{{ old('phone') }}"
-                            inputmode="tel" pattern="^\+?[1-9]\d{7,14}$" required>
+                            inputmode="tel" required>
                         @error('phone')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
@@ -68,7 +56,12 @@
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button class="btn btn-primary" type="submit">Send</button>
+                    <button type="submit" class="visanet-btn">
+                        <span class="visanet-btn__icon-box">
+                            <span class="visanet-btn__icon"><span><i class="icon-arrow-right-3"></i></span></span>
+                        </span>
+                        <span class="visanet-btn__text">Send Message</span>
+                    </button>
                 </form>
             </div>
             <div class="col-lg-4">

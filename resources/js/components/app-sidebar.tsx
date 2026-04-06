@@ -21,6 +21,7 @@ import {
     LayoutPanelLeft,
     Link as LinkIcon,
     SearchCheck,
+    Server,
 } from 'lucide-react';
 import AppLogo from './app-logo';
 
@@ -59,6 +60,11 @@ const mainNavItems: NavItem[] = [
         title: 'Social Links',
         href: '/admin/social-links',
         icon: LinkIcon,
+    },
+    {
+        title: 'Queue Health',
+        href: '/admin/queue-health',
+        icon: Server,
     },
 ];
 
