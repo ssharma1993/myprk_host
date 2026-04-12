@@ -101,7 +101,8 @@ $headerEmail = trim((string) config('company.email', 'info@myprk.ca'));
     flex-wrap: wrap;
     justify-content: flex-start;
     text-align: left;
-    width: 100%;
+    width: 50%;
+    flex: 0 0 50%;
 }
 
 .main-header--two .main-header__top-item {
@@ -139,6 +140,9 @@ $headerEmail = trim((string) config('company.email', 'info@myprk.ca'));
     align-items: center;
     gap: 14px;
     margin-left: auto;
+    width: 50%;
+    flex: 0 0 50%;
+    justify-content: flex-end;
 }
 
 .main-header--two .main-header__social-links a {
@@ -168,6 +172,8 @@ $headerEmail = trim((string) config('company.email', 'info@myprk.ca'));
 
     .main-header--two .main-header__call__content {
         gap: 8px;
+        width: 50%;
+        flex: 0 0 50%;
     }
 
     .main-header--two .main-header__top-item {
@@ -182,6 +188,8 @@ $headerEmail = trim((string) config('company.email', 'info@myprk.ca'));
 
     .main-header--two .main-header__social-links {
         gap: 10px;
+        width: 50%;
+        flex: 0 0 50%;
     }
 }
 
@@ -197,6 +205,17 @@ $headerEmail = trim((string) config('company.email', 'info@myprk.ca'));
 
     .main-header--two .main-header__top-item {
         padding: 0;
+    }
+
+    .main-header--two .main-header__call__content,
+    .main-header--two .main-header__social-links {
+        width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .main-header--two .main-header__social-links {
+        justify-content: flex-start;
+        margin-left: 0;
     }
 }
 </style>
