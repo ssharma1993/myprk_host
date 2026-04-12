@@ -28,9 +28,9 @@
                 <div class="footer-widget footer-widget--links">
                     <h2 class="footer-widget__title">Quick Link</h2>
                     <ul class="list-unstyled footer-widget__links">
-                        <li><a href="{{ url('/about') }}">What We Do</a></li>
+                        <!-- <li><a href="{{ url('/services') }}">What We Do</a></li> -->
                         <li><a href="{{ url('/about') }}">About Company</a></li>
-                        <li><a href="{{ url('/gallery') }}">Our Gallery</a></li>
+                        <!-- <li><a href="{{ url('/gallery') }}">Our Gallery</a></li> -->
                     </ul>
                 </div><!-- /.footer-widget -->
             </div><!-- /.col-lg-3 -->
@@ -41,15 +41,20 @@
                     @foreach($services as $service)
                     <ul class="list-unstyled footer-widget__links">
                         <!-- <li><a href="{{ route('service.show', $service->slug) }}">{{ $service->name }}</a></li> -->
-                        @if($service->children && count($service->children) > 0)
                         <!-- <ul class="list-unstyled" "> -->
-                        @foreach($service->children as $child)
-                        <li><a href="{{ route('service.show', $child->slug) }}">{{ $child->name }}</a></li>
-                        @endforeach
+                        <li><a href="{{ route('service.show', $service->slug) }}">{{ $service->name }}</a></li>
                         <!-- </ul> -->
-                        @endif
                     </ul>
                     @endforeach
+
+                    <div class="footer-widget__image">
+                        <img src="{{ asset('images/RCIC-IRB_EN_HORZ_CLR_POS.png') }}" alt="RCIC" width="100"
+                            style="width: 100%;">
+                    </div>
+                    <div class="footer-widget__image">
+                        <img src="{{ asset('images/CICC_EF_HORZ_CLR_POS_TMMC_1000x326.webp') }}" alt="CICC" width="100"
+                            style="width: 100%;">
+                    </div>
                 </div><!-- /.footer-widget -->
             </div><!-- /.col-xl-3 -->
             <div class="col-lg-3 col-md-5 col-sm-6">
@@ -58,10 +63,8 @@
                     <ul class="list-unstyled footer-widget__links">
                         <li>Monday to Friday: 9:00am – 7:00pm</li>
                         <li>Saturday: 10:00am – 6:00pm</li>
-                        <li>Sunday: 9:00am – 5:00pm</li>
+                        <li>Sunday: Closed</li>
                     </ul>
-                    <br />
-                    <br />
                     @if(isset($officeLocations) && $officeLocations->count() > 0)
                     <div class="footer-office-locations">
                         <h3 class="footer-office-locations__title">Our Locations</h3>
@@ -84,15 +87,6 @@
                     </div>
                     <br />
                     @endif
-
-                    <div class="footer-widget__image">
-                        <img src="{{ asset('images/RCIC-IRB_EN_HORZ_CLR_POS.png') }}" alt="RCIC" width="100"
-                            style="width: 100%;">
-                    </div>
-                    <div class="footer-widget__image">
-                        <img src="{{ asset('images/CICC_EF_HORZ_CLR_POS_TMMC_1000x326.webp') }}" alt="CICC" width="100"
-                            style="width: 100%;">
-                    </div>
                 </div><!-- /.footer-widget -->
             </div><!-- /.col-lg-3 -->
 
