@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div><!-- /.hero-slider-two__carousel -->
 </section><!-- /.hero-slider-two -->
 
-<section class="features">
+<section id="services" class="features">
     <div class="container">
         <!-- <div class="features__bg"></div>/.features__bg -->
         <br />

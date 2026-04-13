@@ -28,7 +28,7 @@
                 <div class="footer-widget footer-widget--links">
                     <h2 class="footer-widget__title">Quick Link</h2>
                     <ul class="list-unstyled footer-widget__links">
-                        <!-- <li><a href="{{ url('/services') }}">What We Do</a></li> -->
+                        <li><a href="{{ url('/#services') }}">What We Do</a></li>
                         <li><a href="{{ url('/about') }}">About Company</a></li>
                         <!-- <li><a href="{{ url('/gallery') }}">Our Gallery</a></li> -->
                     </ul>
