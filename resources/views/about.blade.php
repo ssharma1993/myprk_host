@@ -494,8 +494,11 @@
             </div>
         </div>
         <div class="text-center mt-4">
-            <a href="{{ route('testimonials') }}" class="btn btn-primary btn-lg">
-                Read More Testimonials
+            <a href="{{ route('testimonials') }}" class="visanet-btn">
+                <span class="visanet-btn__icon-box">
+                    <span class="visanet-btn__icon"><span><i class="icon-arrow-right-3"></i></span></span>
+                </span>
+                <span class="visanet-btn__text">Read More Testimonials</span>
             </a>
         </div>
     </div>
@@ -512,7 +515,7 @@
                 we're here to make your dream of living in Canada a reality.
             </p>
             <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <a href="{{ route('contact') }}" class="visanet-btn visanet-btn--white">
+                <a href="{{ route('contact') }}" class="visanet-btn">
                     <span class="visanet-btn__icon-box">
                         <span class="visanet-btn__icon"><span><i class="icon-arrow-right-3"></i></span></span>
                     </span>

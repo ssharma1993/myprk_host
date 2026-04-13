@@ -3,14 +3,19 @@
 @section('title','Contact')
 
 @section('content')
-<section class="section-space">
+<section class="section-space contact-page">
     <div class="container">
-        <div class="sec-title">
+        <div class="sec-title text-center">
+            <div class="sec-title__top justify-content-center">
+                <span class="sec-title__icon sec-title__icon--left"><i class="icon-airplane"></i></span>
+                <p class="sec-title__tagline">Get In Touch</p>
+            </div>
             <h2 class="sec-title__title">Contact Us</h2>
-            <p>Get in touch using the form below.</p>
+            <p>Ready to start your immigration journey?</p>
         </div>
-        <div class="row">
+        <div class="row gutter-y-30">
             <div class="col-lg-8">
+                <div class="contact-page__form-card">
                 @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <h4 class="alert-heading">Please fix the following errors:</h4>
@@ -23,9 +28,7 @@
                 </div>
                 @endif
 
-
-
-                <form action="{{ route('contact.store') }}" method="post">
+                <form action="{{ route('contact.store') }}" method="post" class="contact-page__form">
                     @csrf
                     <div class="mb-3">
                         <input class="form-control @error('name') is-invalid @enderror" name="name"
@@ -63,11 +66,39 @@
                         <span class="visanet-btn__text">Send Message</span>
                     </button>
                 </form>
+                </div>
+
+                @if(isset($officeLocations) && $officeLocations->count() > 0)
+                <div class="contact-page__locations mt-5">
+                    <h4 class="contact-page__locations-title">Our Locations</h4>
+                    <div class="row g-4">
+                        @foreach($officeLocations as $officeLocation)
+                        <div class="col-12">
+                            <div class="footer-office-location h-100">
+                                <h5 class="footer-office-location__name">{{ $officeLocation->name }}</h5>
+                                <div class="footer-office-location__address">{!! nl2br(e($officeLocation->address)) !!}</div>
+                                <div class="footer-office-location__map">
+                                    <iframe src="{{ $officeLocation->google_map_embed_url }}" width="100%" height="220"
+                                        class="contact-page__map-iframe" allowfullscreen="" loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                </div>
+                                @if(!empty($officeLocation->google_map_url))
+                                <a href="{{ $officeLocation->google_map_url }}" target="_blank" rel="noopener noreferrer"
+                                    class="footer-office-location__link">Open in Google Maps</a>
+                                @endif
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
             </div>
             <div class="col-lg-4">
-                <h4>Contact Info</h4>
-                <p>Phone: {{ config('company.phone') }}</p>
-                <p>Email: {{ config('company.email') }}</p>
+                <div class="contact-page__info-card">
+                    <h4 class="contact-page__info-title">Contact Info</h4>
+                    <p class="contact-page__info-text mb-2">Phone: {{ config('company.phone') }}</p>
+                    <p class="contact-page__info-text mb-0">Email: {{ config('company.email') }}</p>
+                </div>
             </div>
         </div>
     </div>

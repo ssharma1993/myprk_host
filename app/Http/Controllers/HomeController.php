@@ -136,11 +136,6 @@ class HomeController extends Controller
             ->with('error', 'There was an error sending your message. Please try again.');
     }
 
-    public function portfolio()
-    {
-        return view('portfolio');
-    }
-
     public function testimonials()
     {
         $homeTestimonials = $this->homeTestimonialsProvider->all();

@@ -735,6 +735,102 @@ label.error {
     color: var(--visanet-white, #ffffff);
 }
 
+.contact-page .sec-title {
+    margin-bottom: 35px;
+}
+
+.contact-page__form-card {
+    background: var(--visanet-white, #ffffff);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(29, 37, 58, 0.08);
+    padding: 30px;
+}
+
+.contact-page__form .form-control {
+    min-height: 54px;
+    border-radius: 8px;
+    border: 1px solid #dce3ef;
+}
+
+.contact-page__form textarea.form-control {
+    min-height: 130px;
+}
+
+.contact-page__info-card {
+    background: #1d253a;
+    border-radius: 12px;
+    padding: 28px;
+    color: #ffffff;
+}
+
+.contact-page__info-title {
+    color: #ffffff;
+    margin-bottom: 14px;
+    font-weight: 700;
+}
+
+.contact-page__info-text {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+}
+
+.contact-page__locations-title {
+    color: var(--visanet-black3, #1d253a);
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.footer-office-location {
+    padding: 16px;
+    border: 1px solid #dbeafe;
+    border-radius: 10px;
+    background: #f8fbff;
+}
+
+.footer-office-location__name {
+    margin: 0 0 8px;
+    color: var(--visanet-base, #e50c37);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.footer-office-location__address {
+    margin-bottom: 12px;
+    color: #1a1a1a;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.footer-office-location__map {
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.contact-page__map-iframe {
+    border: 0;
+}
+
+.footer-office-location__link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--visanet-base, #e50c37);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.footer-office-location__link:hover {
+    color: var(--visanet-black3, #1d253a);
+}
+
+@media (max-width: 767px) {
+    .contact-page__form-card,
+    .contact-page__info-card {
+        padding: 22px;
+    }
+}
+
 .visanet-btn-two {
     display: inline-flex;
     gap: 12px;

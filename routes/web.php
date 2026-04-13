@@ -23,7 +23,6 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/service/{slug}', [HomeController::class, 'service'])->name('service.show');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'storeContact'])->name('contact.store')->middleware('throttle:5,1');
-Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
 Route::get('/testimonials', [HomeController::class, 'testimonials'])->name('testimonials');
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery.public');
 Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
