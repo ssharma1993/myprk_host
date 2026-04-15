@@ -4532,6 +4532,11 @@ body.megamenu-popup-active .mobile-nav__content {
     transition: 500ms;
 }
 
+.mobile-nav__content .main-menu__list li > a.whatsapp-nav-link {
+    justify-content: flex-start;
+    gap: 8px;
+}
+
 .mobile-nav__content .main-menu__list > li > ul > li > a {
     font-size: 15px;
 }

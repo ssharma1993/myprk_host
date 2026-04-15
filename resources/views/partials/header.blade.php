@@ -85,8 +85,8 @@ $headerEmail = trim((string) config('company.email', 'info@myprk.ca'));
                         @endphp
                         @if($whatsappLink)
                         <li><a href="{{ $whatsappLink->url }}" target="_blank" rel="noopener noreferrer"
-                                title="Chat with us on WhatsApp">
-                                <i class="fab fa-whatsapp"></i>&nbsp;WhatsApp
+                                title="Chat with us on WhatsApp" class="whatsapp-nav-link">
+                                <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
                             </a></li>
                         @endif
                         </ul>
