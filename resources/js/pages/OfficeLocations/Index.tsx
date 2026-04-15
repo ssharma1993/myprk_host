@@ -67,7 +67,15 @@ export default function Index({ locations }: Props) {
 
     const submit = (event: React.FormEvent) => {
         event.preventDefault();
-        post('/admin/office-locations');
+        console.log('Form submitted with data:', data);
+        post('/admin/office-locations', {
+            onStart: () => console.log('Request started'),
+            onProgress: (progress) => console.log('Progress:', progress),
+            onFinish: () => console.log('Request finished'),
+            onSuccess: () => console.log('Request succeeded'),
+            onError: (errors) =>
+                console.error('Request failed with errors:', errors),
+        });
     };
 
     const errorMessages = Object.values(errors);

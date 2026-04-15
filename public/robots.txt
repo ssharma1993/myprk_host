@@ -1,2 +1,17 @@
-# This file is intentionally empty.
-# robots.txt is served dynamically by Laravel at /robots.txt route.
+User-agent: *
+Allow: /
+
+Disallow: /dashboard
+Disallow: /admin/
+Disallow: /admin/services
+Disallow: /admin/services/list
+Disallow: /qrcode
+Disallow: /settings/
+Disallow: /login
+Disallow: /register
+Disallow: /two-factor-challenge
+Disallow: /email/verify
+Disallow: /user/
+Disallow: /api/
+
+Sitemap: /sitemap.xml

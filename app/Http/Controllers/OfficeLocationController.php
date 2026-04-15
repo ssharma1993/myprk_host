@@ -32,6 +32,11 @@ class OfficeLocationController extends Controller
 
     public function update(Request $request)
     {
+        \Log::info('Office Location Update - Request received', [
+            'url' => $request->url(),
+            'method' => $request->method(),
+        ]);
+
         $data = $request->validate([
             'locations' => ['required', 'array'],
             'locations.*.id' => ['nullable', 'integer', 'exists:office_locations,id'],
@@ -42,6 +47,8 @@ class OfficeLocationController extends Controller
             'locations.*.display_order' => ['required', 'integer', 'min:0'],
             'locations.*.is_active' => ['required', 'boolean'],
         ]);
+
+        \Log::info('Office Location Update - Validation passed');
 
         $errors = [];
         foreach ($data['locations'] as $index => $item) {
@@ -55,6 +62,7 @@ class OfficeLocationController extends Controller
         }
 
         if (!empty($errors)) {
+            \Log::warning('Office Location Update - Validation errors', ['errors' => $errors]);
             return back()->withErrors($errors)->withInput();
         }
 
@@ -95,7 +103,9 @@ class OfficeLocationController extends Controller
 
         OfficeLocation::clearCache();
 
-        return back()->with('success', 'Office locations updated successfully');
+        \Log::info('Office Location Update - Successfully completed');
+
+        return back()->with('success', 'Office locations updated successfully.');
     }
 
     private function normalizeGoogleMapEmbedUrl(string $value): string

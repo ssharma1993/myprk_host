@@ -130,6 +130,23 @@
     @endif
 
     <base href="{{ asset('client') }}/">
+    @php
+    $isProdEnv = app()->environment('production');
+    $themeCssPath = $isProdEnv ? 'assets/css/visanet.min.css' : 'assets/css/visanet.css';
+    $jqueryPath = $isProdEnv ? 'assets/vendors/jquery/jquery-3.7.1.min.js' : 'assets/vendors/jquery/jquery-3.7.1.js';
+    $themeJsPath = $isProdEnv ? 'assets/js/visanet.min.js' : 'assets/js/visanet.js';
+
+    $versionedAsset = function (string $relativePath): string {
+    $fullPath = public_path('client/' . $relativePath);
+    $version = file_exists($fullPath) ? filemtime($fullPath) : time();
+
+    return $relativePath . '?v=' . $version;
+    };
+
+    $themeCssUrl = $versionedAsset($themeCssPath);
+    $jqueryUrl = $versionedAsset($jqueryPath);
+    $themeJsUrl = $versionedAsset($themeJsPath);
+    @endphp
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap"
@@ -150,7 +167,7 @@
     <link rel="stylesheet" href="assets/vendors/owl-carousel/css/owl.carousel.min.css" />
     <link rel="stylesheet" href="assets/vendors/owl-carousel/css/owl.theme.default.min.css" />
 
-    <link rel="stylesheet" href="assets/css/visanet.css" />
+    <link rel="stylesheet" href="{{ $themeCssUrl }}" />
     @stack('head')
 
     {{-- Google Tag Manager (head) --}}
@@ -264,7 +281,7 @@
     </div>
     @endif
 
-    <script src="assets/vendors/jquery/jquery-3.7.1.min.js"></script>
+    <script src="{{ $jqueryUrl }}"></script>
     <script src="assets/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="assets/vendors/jarallax/jarallax.min.js"></script>
@@ -287,7 +304,7 @@
     <script src="assets/vendors/gsap/scrolltrigger.min.js"></script>
     <script src="assets/vendors/gsap/splittext.min.js"></script>
     <script src="assets/vendors/gsap/visanet-split.js"></script>
-    <script src="assets/js/visanet.js"></script>
+    <script src="{{ $themeJsUrl }}"></script>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
