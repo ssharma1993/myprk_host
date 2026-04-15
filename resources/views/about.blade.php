@@ -37,9 +37,9 @@
                         data-aos-duration="1300">
                         <p>
                             My journey to Canada was not simple. It was filled with uncertainty, obstacles, and moments
-                            where I had to make life-changing decisions with very little clarity. From the very
-                            beginning —
-                            when I first consulted an agent in India about coming to Canada — to navigating my own
+                            where I had to make life changing decisions with very little clarity. From the very
+                            beginning
+                            when I first consulted an agent in India about coming to Canada to navigating my own
                             permanent
                             residence application, I experienced firsthand how complex and emotionally demanding the
                             immigration process can be.
@@ -84,16 +84,16 @@
                         </ul>
 
                         <p>
-                            Immigration is more than paperwork — it’s your future, your family, and your dreams. Having
+                            Immigration is more than paperwork it’s your future, your family, and your dreams. Having
                             experienced the challenges myself, I understand the emotions and uncertainties involved. At
                             PRK
-                            Immigration Consultancy, we are committed to guiding you every step of the way — helping you
+                            Immigration Consultancy, we are committed to guiding you every step of the way helping you
                             <em>navigate, settle, and thrive</em> with confidence in Canada.
                         </p>
 
                         <p>
                             At PRK Immigration Consultancy, you are not just another application.
-                            You are a person with goals — and I am here to help you achieve them the right way.
+                            You are a person with goals and I am here to help you achieve them the right way.
                         </p>
                     </div>
 

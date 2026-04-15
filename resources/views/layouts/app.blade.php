@@ -116,16 +116,16 @@
 
     @if(!empty($socialProfileUrls))
     <script type="application/ld+json">
-    {
-        !!json_encode([
-            '@context' => 'https://schema.org',
-            '@type' => 'Organization',
-            'name' => config('app.name', 'PRK Immigration'),
-            'url' => config('app.url'),
-            'logo' => $metaImage,
-            'sameAs' => $socialProfileUrls,
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!
-    }
+        {
+            !!json_encode([
+                '@context' => 'https://schema.org',
+                '@type' => 'Organization',
+                'name' => config('app.name', 'PRK Immigration'),
+                'url' => config('app.url'),
+                'logo' => $metaImage,
+                'sameAs' => $socialProfileUrls,
+            ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!
+        }
     </script>
     @endif
 
@@ -173,20 +173,20 @@
     {{-- Google Tag Manager (head) --}}
     @if($gtmId)
     <script>
-    (function(w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({
-            'gtm.start': new Date().getTime(),
-            event: 'gtm.js'
-        });
-        var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s),
-            dl = l != 'dataLayer' ? '&l=' + l : '';
-        j.async = true;
-        j.src =
-            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', '{{ $gtmId }}');
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', '{{ $gtmId }}');
     </script>
     @endif
 
@@ -194,13 +194,13 @@
     @if($gaId)
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
+        window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-    gtag('config', '{{ $gaId }}');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', '{{ $gaId }}');
     </script>
     @endif
 
@@ -221,26 +221,26 @@
     {{-- Facebook Pixel --}}
     @if($fbPixelId)
     <script>
-    ! function(f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function() {
-            n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = '2.0';
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = !0;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s)
-    }(window, document, 'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '{{ $fbPixelId }}');
-    fbq('track', 'PageView');
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '{{ $fbPixelId }}');
+        fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id={{ $fbPixelId }}&ev=PageView&noscript=1" /></noscript>
@@ -307,25 +307,25 @@
     <script src="{{ $themeJsUrl }}"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        window.showFlashMessageModal = function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            window.showFlashMessageModal = function() {
+                var flashModalElement = document.getElementById('flashMessageModal');
+                if (!flashModalElement || !window.bootstrap || !window.bootstrap.Modal) {
+                    return null;
+                }
+
+                var flashModal = window.bootstrap.Modal.getOrCreateInstance(flashModalElement);
+                flashModal.show();
+                return flashModal;
+            };
+
             var flashModalElement = document.getElementById('flashMessageModal');
-            if (!flashModalElement || !window.bootstrap || !window.bootstrap.Modal) {
-                return null;
+            var shouldAutoShowFlashModal = flashModalElement && flashModalElement.dataset.autoShow === '1';
+
+            if (shouldAutoShowFlashModal) {
+                window.showFlashMessageModal();
             }
-
-            var flashModal = window.bootstrap.Modal.getOrCreateInstance(flashModalElement);
-            flashModal.show();
-            return flashModal;
-        };
-
-        var flashModalElement = document.getElementById('flashMessageModal');
-        var shouldAutoShowFlashModal = flashModalElement && flashModalElement.dataset.autoShow === '1';
-
-        if (shouldAutoShowFlashModal) {
-            window.showFlashMessageModal();
-        }
-    });
+        });
     </script>
 
     @stack('scripts')

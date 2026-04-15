@@ -281,9 +281,9 @@
                         data-aos-duration="1300">
                         <p>
                             My journey to Canada was not simple. It was filled with uncertainty, obstacles, and moments
-                            where I had to make life-changing decisions with very little clarity. From the very
-                            beginning —
-                            when I first consulted an agent in India about coming to Canada — to navigating my own
+                            where I had to make life changing decisions with very little clarity. From the very
+                            beginning
+                            when I first consulted an agent in India about coming to Canada to navigating my own
                             permanent
                             residence application, I experienced firsthand how complex and emotionally demanding the
                             immigration process can be.
@@ -704,7 +704,8 @@
                 </div>
             </div>
         </div><!-- /.row -->
-        <div class="row justify-content-center align-items-center licenses-certifications__logos-row" data-aos="fade-up" data-aos-duration="1200">
+        <div class="row justify-content-center align-items-center licenses-certifications__logos-row" data-aos="fade-up"
+            data-aos-duration="1200">
             <div class="col-6 col-md-auto licenses-certifications__logo-col">
                 {{-- Place rcic-irb-logo.png in public/images/ --}}
                 <img src="{{ asset('images/RCIC-IRB_EN_HORZ_CLR_POS.png') }}"
