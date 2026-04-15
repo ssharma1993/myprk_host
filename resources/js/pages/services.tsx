@@ -149,7 +149,7 @@ export default function Services() {
                 return;
             }
 
-            const res = await axios.get('/services/list');
+            const res = await axios.get('/admin/services/list');
             setServices(buildServiceTree(res.data as Service[]));
         } catch (err) {
             // ignore fetch errors for now
@@ -219,11 +219,11 @@ export default function Services() {
             if (editingId) {
                 // PHP cannot receive files via PUT, use POST + _method spoofing
                 formData.append('_method', 'PUT');
-                await axios.post(`/services/${editingId}`, formData, {
+                await axios.post(`/admin/services/${editingId}`, formData, {
                     headers,
                 });
             } else {
-                await axios.post('/services', formData, { headers });
+                await axios.post('/admin/services', formData, { headers });
             }
 
             await fetchServices();
@@ -258,7 +258,7 @@ export default function Services() {
             const csrf = getCsrf();
             if (!csrf) throw new Error('CSRF token not found');
 
-            await axios.delete(`/services/${id}`, {
+            await axios.delete(`/admin/services/${id}`, {
                 headers: { 'X-CSRF-TOKEN': csrf },
             });
             await fetchServices();
@@ -273,7 +273,9 @@ export default function Services() {
     );
 
     return (
-        <AppLayout breadcrumbs={[{ title: 'Services', href: '/services' }]}>
+        <AppLayout
+            breadcrumbs={[{ title: 'Services', href: '/admin/services' }]}
+        >
             <Head title="Services">
                 <link
                     rel="stylesheet"

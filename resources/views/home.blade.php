@@ -5,74 +5,74 @@
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const section = document.querySelector('.visa-two--image-sticky');
-    if (!section) return;
+    document.addEventListener('DOMContentLoaded', function() {
+        const section = document.querySelector('.visa-two--image-sticky');
+        if (!section) return;
 
-    const stickyCol = section.querySelector('.visa-two__sticky-col');
-    const rightCol = section.querySelector('.col-xl-7');
-    const imageWrap = section.querySelector('.visa-two__images');
-    if (!stickyCol || !imageWrap) return;
+        const stickyCol = section.querySelector('.visa-two__sticky-col');
+        const rightCol = section.querySelector('.col-xl-7');
+        const imageWrap = section.querySelector('.visa-two__images');
+        if (!stickyCol || !imageWrap) return;
 
-    imageWrap.style.transition = 'top .35s ease, left .35s ease, transform .35s ease, width .35s ease';
+        imageWrap.style.transition = 'top .35s ease, left .35s ease, transform .35s ease, width .35s ease';
 
-    const resetImage = () => {
-        imageWrap.style.position = 'relative';
-        imageWrap.style.top = '250px';
-        imageWrap.style.bottom = 'auto';
-        imageWrap.style.left = '0';
-        imageWrap.style.width = '100%';
-        imageWrap.style.transform = 'none';
-    };
-
-    const updateStickyImage = () => {
-        if (window.innerWidth < 1200) {
-            stickyCol.style.minHeight = '';
-            resetImage();
-            return;
-        }
-
-        if (rightCol) {
-            stickyCol.style.minHeight = rightCol.offsetHeight + 'px';
-        }
-
-        const sectionRect = section.getBoundingClientRect();
-        const stickyColRect = stickyCol.getBoundingClientRect();
-        const imageHeight = imageWrap.offsetHeight;
-        const viewportMiddleTop = (window.innerHeight / 2) - (imageHeight / 2);
-        const sectionTopDoc = window.scrollY + sectionRect.top + 250;
-        const sectionBottomDoc = sectionTopDoc + section.offsetHeight - 250;
-        const maxFixedScrollY = sectionBottomDoc - imageHeight - viewportMiddleTop;
-
-        if ((window.scrollY + viewportMiddleTop) < sectionTopDoc) {
-            resetImage();
-            return;
-        }
-
-        if (window.scrollY <= maxFixedScrollY) {
-            imageWrap.style.position = 'fixed';
-            imageWrap.style.top = '50%';
+        const resetImage = () => {
+            imageWrap.style.position = 'relative';
+            imageWrap.style.top = '250px';
             imageWrap.style.bottom = 'auto';
-            imageWrap.style.left = stickyColRect.left + 'px';
-            imageWrap.style.width = stickyColRect.width + 'px';
-            imageWrap.style.transform = 'translateY(-50%)';
-            return;
-        }
+            imageWrap.style.left = '0';
+            imageWrap.style.width = '100%';
+            imageWrap.style.transform = 'none';
+        };
 
-        imageWrap.style.position = 'absolute';
-        imageWrap.style.top = 'auto';
-        imageWrap.style.bottom = '0';
-        imageWrap.style.left = '0';
-        imageWrap.style.width = '100%';
-        imageWrap.style.transform = 'none';
-    };
+        const updateStickyImage = () => {
+            if (window.innerWidth < 1200) {
+                stickyCol.style.minHeight = '';
+                resetImage();
+                return;
+            }
 
-    updateStickyImage();
-    window.addEventListener('scroll', updateStickyImage, {
-        passive: true
+            if (rightCol) {
+                stickyCol.style.minHeight = rightCol.offsetHeight + 'px';
+            }
+
+            const sectionRect = section.getBoundingClientRect();
+            const stickyColRect = stickyCol.getBoundingClientRect();
+            const imageHeight = imageWrap.offsetHeight;
+            const viewportMiddleTop = (window.innerHeight / 2) - (imageHeight / 2);
+            const sectionTopDoc = window.scrollY + sectionRect.top + 250;
+            const sectionBottomDoc = sectionTopDoc + section.offsetHeight - 250;
+            const maxFixedScrollY = sectionBottomDoc - imageHeight - viewportMiddleTop;
+
+            if ((window.scrollY + viewportMiddleTop) < sectionTopDoc) {
+                resetImage();
+                return;
+            }
+
+            if (window.scrollY <= maxFixedScrollY) {
+                imageWrap.style.position = 'fixed';
+                imageWrap.style.top = '50%';
+                imageWrap.style.bottom = 'auto';
+                imageWrap.style.left = stickyColRect.left + 'px';
+                imageWrap.style.width = stickyColRect.width + 'px';
+                imageWrap.style.transform = 'translateY(-50%)';
+                return;
+            }
+
+            imageWrap.style.position = 'absolute';
+            imageWrap.style.top = 'auto';
+            imageWrap.style.bottom = '0';
+            imageWrap.style.left = '0';
+            imageWrap.style.width = '100%';
+            imageWrap.style.transform = 'none';
+        };
+
+        updateStickyImage();
+        window.addEventListener('scroll', updateStickyImage, {
+            passive: true
+        });
+        window.addEventListener('resize', updateStickyImage);
     });
-    window.addEventListener('resize', updateStickyImage);
-});
 </script>
 @endpush
 
@@ -704,18 +704,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         </div><!-- /.row -->
-        <div class="row justify-content-center align-items-center" data-aos="fade-up" data-aos-duration="1200">
-            <div class="col-auto" style="padding: 15px 30px;">
+        <div class="row justify-content-center align-items-center licenses-certifications__logos-row" data-aos="fade-up" data-aos-duration="1200">
+            <div class="col-6 col-md-auto licenses-certifications__logo-col">
                 {{-- Place rcic-irb-logo.png in public/images/ --}}
                 <img src="{{ asset('images/RCIC-IRB_EN_HORZ_CLR_POS.png') }}"
                     alt="RCIC-IRB – Regulated Canadian Immigration Consultant"
-                    style="max-height: 150px; width: auto; object-fit: contain;">
+                    class="licenses-certifications__logo-img">
             </div>
-            <div class="col-auto" style="padding: 15px 30px;">
+            <div class="col-6 col-md-auto licenses-certifications__logo-col">
                 {{-- Place cicc-ccic-logo.png in public/images/ --}}
                 <img src="{{ asset('images/CICC_EF_HORZ_CLR_POS_TMMC_1000x326.webp') }}"
                     alt="CICC CCIC – College of Immigration and Citizenship Consultants"
-                    style="max-height: 150px; width: auto; object-fit: contain;">
+                    class="licenses-certifications__logo-img">
             </div>
         </div><!-- /.row logos -->
         <div class="row justify-content-center text-center" style="margin-top: 36px;" data-aos="fade-up"

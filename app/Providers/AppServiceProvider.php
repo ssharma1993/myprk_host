@@ -37,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
 
         $socialLinks = collect();
         $officeLocations = collect();
+        $footerOfficeLocations = collect();
 
         try {
             if (Schema::hasTable('social_links')) {
@@ -45,13 +46,16 @@ class AppServiceProvider extends ServiceProvider
 
             if (Schema::hasTable('office_locations')) {
                 $officeLocations = OfficeLocation::getCachedForView();
+                $footerOfficeLocations = OfficeLocation::getCachedFooterForView();
             }
         } catch (Throwable $exception) {
             $socialLinks = collect();
             $officeLocations = collect();
+            $footerOfficeLocations = collect();
         }
 
         View::share('socialLinks', $socialLinks);
         View::share('officeLocations', $officeLocations);
+        View::share('footerOfficeLocations', $footerOfficeLocations);
     }
 }

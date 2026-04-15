@@ -20,6 +20,7 @@ use App\Http\Controllers\PublicStorageController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/services', [HomeController::class, 'services'])->name('services.public');
 Route::get('/service/{slug}', [HomeController::class, 'service'])->name('service.show');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'storeContact'])->name('contact.store')->middleware('throttle:5,1');
@@ -54,13 +55,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/qrcode/generate', [QRCodeController::class, 'generate'])->name('qrcode.generate');
     Route::post('/qrcode/download', [QRCodeController::class, 'download'])->name('qrcode.download');
     // Services
-    Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+    Route::get('/admin/services', [ServiceController::class, 'index'])->name('services.index');
     // JSON endpoints for frontend
-    Route::get('/services/list', [ServiceController::class, 'getAll'])->name('services.list');
-    Route::get('/services/{id}/json', [ServiceController::class, 'getById'])->name('services.get');
-    Route::post('/services', [ServiceController::class, 'store'])->name('services.store');
-    Route::put('/services/{service}', [ServiceController::class, 'update'])->name('services.update');
-    Route::delete('/services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
+    Route::get('/admin/services/list', [ServiceController::class, 'getAll'])->name('services.list');
+    Route::get('/admin/services/{id}/json', [ServiceController::class, 'getById'])->name('services.get');
+    Route::post('/admin/services', [ServiceController::class, 'store'])->name('services.store');
+    Route::put('/admin/services/{service}', [ServiceController::class, 'update'])->name('services.update');
+    Route::delete('/admin/services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
     // Gallery Routes
     Route::get('/admin/gallery', [GalleryController::class, 'index'])->name('gallery.index');
     Route::resource('/admin/gallery', GalleryController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);

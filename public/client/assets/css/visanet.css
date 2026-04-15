@@ -1813,6 +1813,12 @@ label.error {
     height: 25px;
     opacity: 0.4;
 }
+@media (max-width: 1199px) {
+    .custom-cursor__cursor,
+    .custom-cursor__cursor-two {
+        display: none;
+    }
+}
 
 /*--------------------------------------------------------------
 # Animations
@@ -3059,6 +3065,12 @@ label.error {
     flex-grow: 1;
     display: block;
 }
+@media (min-width: 1200px) {
+    .main-header--two .main-header__right {
+        display: flex;
+        align-items: center;
+    }
+}
 @media (max-width: 1199px) {
     .main-header--two .main-header__right {
         display: flex;
@@ -3135,6 +3147,11 @@ label.error {
 }
 .main-header--two .main-header__bottom {
     /* padding-left: 54px; */
+}
+@media (min-width: 1200px) {
+    .main-header--two .main-header__bottom {
+        width: 100%;
+    }
 }
 .main-header--two .main-header__right__right {
     display: flex;
@@ -23956,5 +23973,107 @@ body.boxed-wrapper .page-wrapper {
     .main-header--two .main-header__social-links {
         justify-content: flex-start;
         margin-left: 0;
+    }
+}
+
+/* --------------------------------------------------------
+   Sticky Header - All Devices
+-------------------------------------------------------- */
+.main-header.main-header--two {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: var(--visanet-white, #ffffff);
+    box-shadow: 0px 3px 18px rgba(34, 34, 34, 0.07);
+}
+
+/* Suppress cloned sticky header since native CSS sticky is used */
+.sticky-header--cloned.main-header--two {
+    display: none !important;
+}
+
+.licenses-certifications__logos-row {
+    row-gap: 12px;
+}
+
+.licenses-certifications__logo-col {
+    padding: 15px 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.licenses-certifications__logo-img {
+    width: 100%;
+    max-width: 320px;
+    max-height: 150px;
+    height: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 991px) {
+    .licenses-certifications__logo-col {
+        padding: 12px 16px;
+    }
+
+    .licenses-certifications__logo-img {
+        max-width: 280px;
+        max-height: 120px;
+    }
+}
+
+@media (max-width: 575px) {
+    .licenses-certifications__logo-col {
+        padding: 10px 10px;
+    }
+
+    .licenses-certifications__logo-img {
+        max-width: 240px;
+        max-height: 100px;
+    }
+}
+
+/* --------------------------------------------------------
+   Mobile Social Links in Header
+-------------------------------------------------------- */
+.main-header__mobile-social {
+    display: none;
+    gap: 12px;
+}
+
+@media (max-width: 1199px) {
+    .main-header--two .main-header__inner {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 15px;
+        flex-wrap: nowrap;
+    }
+
+    .main-header__mobile-social {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-shrink: 0;
+        margin-left: auto;
+        margin-right: 15px;
+    }
+
+    .main-header__mobile-social a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        color: var(--visanet-black3, #1d253a);
+        background-color: transparent;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        font-size: 26px;
+    }
+
+    .main-header__mobile-social a:hover {
+        color: var(--visanet-base, #e50c37);
+        background-color: rgba(229, 12, 55, 0.1);
     }
 }

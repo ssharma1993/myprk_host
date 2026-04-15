@@ -166,6 +166,17 @@ class HomeController extends Controller
         return view('service', compact('service', 'childServices'));
     }
 
+    public function services()
+    {
+        $parentServices = Service::with('children')
+            ->whereNull('parent_id')
+            ->orderBy('display_order', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('resources', compact('parentServices'));
+    }
+
     public function privacyPolicy()
     {
         return view('privacy-policy');

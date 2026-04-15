@@ -32,7 +32,14 @@ class OfficeLocation extends Model
         });
     }
 
-    public static function activeOrdered()
+    public static function headerContactLocations()
+    {
+        return static::query()
+            ->orderBy('display_order')
+            ->orderBy('id');
+    }
+
+    public static function footerLocations()
     {
         return static::query()
             ->where('is_active', true)
@@ -42,13 +49,21 @@ class OfficeLocation extends Model
 
     public static function getCachedForView()
     {
-        return Cache::remember('office_locations.active', 3600, function () {
-            return static::activeOrdered()->get();
+        return Cache::remember('office_locations.header_contact', 3600, function () {
+            return static::headerContactLocations()->get();
+        });
+    }
+
+    public static function getCachedFooterForView()
+    {
+        return Cache::remember('office_locations.footer', 3600, function () {
+            return static::footerLocations()->get();
         });
     }
 
     public static function clearCache(): void
     {
-        Cache::forget('office_locations.active');
+        Cache::forget('office_locations.header_contact');
+        Cache::forget('office_locations.footer');
     }
 }

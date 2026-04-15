@@ -41,6 +41,16 @@ $headerEmail = trim((string) config('company.email', 'info@myprk.ca'));
                     </a>
                 </div><!-- /.main-header__logo -->
             </div><!-- /.main-header__left -->
+            <div class="main-header__mobile-social">
+                @if(isset($socialLinks) && $socialLinks->count() > 0)
+                @foreach($socialLinks as $socialLink)
+                <a href="{{ $socialLink->url }}" target="_blank" rel="noopener noreferrer"
+                    aria-label="{{ $socialLink->label }}">
+                    <i class="{{ $socialLink->icon_class ?? 'fab fa-link' }}"></i>
+                </a>
+                @endforeach
+                @endif
+            </div><!-- /.main-header__mobile-social -->
             <div class="main-header__right">
                 <div class="main-header__bottom">
                     <nav class="main-header__nav main-menu">
@@ -48,7 +58,7 @@ $headerEmail = trim((string) config('company.email', 'info@myprk.ca'));
                             <li><a href="{{ url('/') }}">Home</a></li>
                             <li><a href="{{ url('/about') }}">About</a></li>
                             <li class="dropdown">
-                                <a>Services</a>
+                                <a href="{{ route('services.public') }}">Services</a>
                                 <ul>
                                     @forelse(($services ?? []) as $service)
                                     <li class="dropdown"><a
@@ -62,12 +72,23 @@ $headerEmail = trim((string) config('company.email', 'info@myprk.ca'));
                                     @endforeach
                                 </ul>
                                 @empty
-                            <li><a href="{{ url('/resources') }}">View Services</a></li>
+                            <li><a href="{{ route('services.public') }}">View Services</a></li>
                             @endforelse
                         </ul>
                         </li>
                         <li><a href="{{ url('/testimonials') }}">Testimonials</a></li>
                         <li><a href="{{ url('/contact') }}">Contact Us</a></li>
+                        @php
+                        $whatsappLink = collect($socialLinks ?? [])->first(function ($link) {
+                        return strtolower($link->platform ?? '') === 'whatsapp' && $link->url;
+                        });
+                        @endphp
+                        @if($whatsappLink)
+                        <li><a href="{{ $whatsappLink->url }}" target="_blank" rel="noopener noreferrer"
+                                title="Chat with us on WhatsApp">
+                                <i class="fab fa-whatsapp"></i>&nbsp;WhatsApp
+                            </a></li>
+                        @endif
                         </ul>
                     </nav><!-- /.main-header__nav -->
                     <div class="main-header__right__right">

@@ -18,6 +18,7 @@ class SecurityHeaders
 
         $appUrl = config('app.url', '');
         $isHttps = str_starts_with($appUrl, 'https://') || $request->isSecure();
+        $shouldUpgradeInsecureRequests = $isHttps && !app()->environment('local');
 
         // ─── X-Content-Type-Options ────────────────────────────────────────────
         // Prevent MIME-type sniffing.
@@ -49,7 +50,7 @@ class SecurityHeaders
         // ─── Content-Security-Policy ───────────────────────────────────────────
         // Allows inline scripts (required by Bootstrap/jQuery/Owl), Google Fonts,
         // Google Analytics/Tag Manager, and Facebook Pixel.
-        $csp = implode('; ', [
+        $cspDirectives = [
             "default-src 'self'",
             // Scripts: self + CDNs used in the project
             "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
@@ -85,8 +86,13 @@ class SecurityHeaders
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",
-            "upgrade-insecure-requests",
-        ]);
+        ];
+
+        if ($shouldUpgradeInsecureRequests) {
+            $cspDirectives[] = 'upgrade-insecure-requests';
+        }
+
+        $csp = implode('; ', $cspDirectives);
         $response->headers->set('Content-Security-Policy', $csp);
 
         // ─── Strict-Transport-Security ─────────────────────────────────────────

@@ -10,11 +10,12 @@ class SitemapController extends Controller
 {
     private array $staticPages = [
         ['url' => '/', 'changefreq' => 'weekly', 'priority' => '1.0'],
+        ['url' => '/services', 'changefreq' => 'monthly', 'priority' => '0.9'],
         ['url' => '/about', 'changefreq' => 'monthly', 'priority' => '0.8'],
         ['url' => '/contact', 'changefreq' => 'monthly', 'priority' => '0.7'],
         ['url' => '/gallery', 'changefreq' => 'weekly', 'priority' => '0.7'],
         ['url' => '/testimonials', 'changefreq' => 'monthly', 'priority' => '0.6'],
-        ['url' => '/resources', 'changefreq' => 'monthly', 'priority' => '0.6'],
+
     ];
 
     public function index(): Response
@@ -72,7 +73,7 @@ class SitemapController extends Controller
             '',
             'Disallow: /dashboard',
             'Disallow: /admin/',
-            'Disallow: /services',
+            'Disallow: /admin/services',
             'Disallow: /qrcode',
             'Disallow: /settings/',
             'Disallow: /login',
@@ -81,7 +82,8 @@ class SitemapController extends Controller
             'Disallow: /email/verify',
             'Disallow: /user/',
             'Disallow: /api/',
-            'Disallow: /services/list',
+            'Disallow: /login',
+            'Disallow: /admin/services/list',
             '',
             'Sitemap: ' . url('/sitemap.xml'),
         ]) . "\n";

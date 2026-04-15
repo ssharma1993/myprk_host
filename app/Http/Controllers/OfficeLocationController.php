@@ -38,21 +38,24 @@ class OfficeLocationController extends Controller
             'locations.*.name' => ['required', 'string', 'max:255'],
             'locations.*.address' => ['required', 'string', 'max:1000'],
             'locations.*.google_map_embed_url' => ['required', 'string', 'max:2000'],
-            'locations.*.google_map_url' => ['nullable', 'url', 'max:2000'],
+            'locations.*.google_map_url' => ['nullable', 'string', 'max:2000'],
             'locations.*.display_order' => ['required', 'integer', 'min:0'],
             'locations.*.is_active' => ['required', 'boolean'],
         ]);
 
+        $errors = [];
         foreach ($data['locations'] as $index => $item) {
             $data['locations'][$index]['google_map_embed_url'] = $this->normalizeGoogleMapEmbedUrl(
                 $item['google_map_embed_url']
             );
 
             if (!$this->isValidGoogleMapEmbedUrl($data['locations'][$index]['google_map_embed_url'])) {
-                throw ValidationException::withMessages([
-                    "locations.$index.google_map_embed_url" => 'Please enter a valid Google Maps embed URL or paste the iframe embed code.',
-                ]);
+                $errors["locations.$index.google_map_embed_url"] = 'Please enter a valid Google Maps embed URL or paste the iframe embed code.';
             }
+        }
+
+        if (!empty($errors)) {
+            return back()->withErrors($errors)->withInput();
         }
 
         DB::transaction(function () use ($data) {
@@ -92,7 +95,7 @@ class OfficeLocationController extends Controller
 
         OfficeLocation::clearCache();
 
-        return redirect()->back()->with('success', 'Office locations updated successfully.');
+        return back()->with('success', 'Office locations updated successfully');
     }
 
     private function normalizeGoogleMapEmbedUrl(string $value): string
@@ -112,29 +115,25 @@ class OfficeLocationController extends Controller
 
     private function isValidGoogleMapEmbedUrl(string $url): bool
     {
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        if (empty($url)) {
             return false;
         }
 
-        $host = (string) parse_url($url, PHP_URL_HOST);
-        $path = (string) parse_url($url, PHP_URL_PATH);
-        $query = (string) parse_url($url, PHP_URL_QUERY);
-
-        $allowedHosts = [
-            'www.google.com',
-            'google.com',
-            'maps.google.com',
-            'www.google.ca',
-            'google.ca',
-            'maps.google.ca',
-        ];
-
-        if (!in_array($host, $allowedHosts, true)) {
+        // Must start with http/https or be a protocol-relative URL
+        if (!preg_match('/^https?:\/\/|^\/\//', $url)) {
             return false;
         }
 
-        return strpos($path, '/maps/embed') !== false
-            || strpos($query, 'output=embed') !== false
-            || strpos($query, 'pb=') !== false;
+        // Must contain google.com or google.ca somewhere in the URL
+        if (!preg_match('/google\.(com|ca)/i', $url)) {
+            return false;
+        }
+
+        // Must contain maps-related path or query
+        if (!preg_match('/maps|embed/i', $url)) {
+            return false;
+        }
+
+        return true;
     }
 }

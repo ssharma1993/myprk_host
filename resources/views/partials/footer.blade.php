@@ -28,7 +28,7 @@
                 <div class="footer-widget footer-widget--links">
                     <h2 class="footer-widget__title">Quick Link</h2>
                     <ul class="list-unstyled footer-widget__links">
-                        <li><a href="{{ url('/#services') }}">What We Do</a></li>
+                        <li><a href="{{ url('/services') }}">What We Do</a></li>
                         <li><a href="{{ url('/about') }}">About Company</a></li>
                         <!-- <li><a href="{{ url('/gallery') }}">Our Gallery</a></li> -->
                     </ul>
@@ -65,10 +65,10 @@
                         <li>Saturday: 10:00am – 6:00pm</li>
                         <li>Sunday: Closed</li>
                     </ul>
-                    @if(isset($officeLocations) && $officeLocations->count() > 0)
+                    @if(isset($footerOfficeLocations) && $footerOfficeLocations->count() > 0)
                     <div class="footer-office-locations">
                         <h3 class="footer-office-locations__title">Our Locations</h3>
-                        @foreach($officeLocations as $officeLocation)
+                        @foreach($footerOfficeLocations as $officeLocation)
                         <div class="footer-office-location">
                             <h4 class="footer-office-location__name">{{ $officeLocation->name }}</h4>
                             <div class="footer-office-location__address">{!! nl2br(e($officeLocation->address)) !!}
@@ -108,58 +108,58 @@
 </footer>
 
 <style>
-.footer-office-locations {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
+    .footer-office-locations {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
 
-.footer-office-locations__title {
-    margin: 0;
-    color: #0046a1;
-    font-size: 18px;
-    font-weight: 700;
-}
+    .footer-office-locations__title {
+        margin: 0;
+        color: #0046a1;
+        font-size: 18px;
+        font-weight: 700;
+    }
 
-.footer-office-location {
-    padding: 16px;
-    border: 1px solid #dbeafe;
-    border-radius: 10px;
-    background: #f8fbff;
-}
+    .footer-office-location {
+        padding: 16px;
+        border: 1px solid #dbeafe;
+        border-radius: 10px;
+        background: #f8fbff;
+    }
 
-.footer-office-location__name {
-    margin: 0 0 8px;
-    color: #0046a1;
-    font-size: 16px;
-    font-weight: 600;
-}
+    .footer-office-location__name {
+        margin: 0 0 8px;
+        color: #0046a1;
+        font-size: 16px;
+        font-weight: 600;
+    }
 
-.footer-office-location__address {
-    margin-bottom: 12px;
-    color: #1a1a1a;
-    font-size: 14px;
-    line-height: 1.7;
-}
+    .footer-office-location__address {
+        margin-bottom: 12px;
+        color: #1a1a1a;
+        font-size: 14px;
+        line-height: 1.7;
+    }
 
-.footer-office-location__map {
-    overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
+    .footer-office-location__map {
+        overflow: hidden;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
 
-.footer-office-location__link {
-    display: inline-flex;
-    align-items: center;
-    color: #0046a1;
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: underline;
-}
+    .footer-office-location__link {
+        display: inline-flex;
+        align-items: center;
+        color: #0046a1;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: underline;
+    }
 
-.footer-office-location__link:hover {
-    color: #003d8a;
-}
+    .footer-office-location__link:hover {
+        color: #003d8a;
+    }
 </style>
 
 <!-- mobile nav, search popup and other page-level widgets (from the original template) -->

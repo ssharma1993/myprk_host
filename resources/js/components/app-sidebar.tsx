@@ -36,7 +36,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Services',
-        href: '/services',
+        href: '/admin/services',
         icon: LayoutList,
     },
     {
