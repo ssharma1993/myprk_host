@@ -214,8 +214,8 @@
                     <div class="col-md-6">
                         <div
                             style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; text-align: center;">
-                            <h2 class="display-6 fw-bold mb-2">1000+</h2>
-                            <p class="mb-0">Successful Cases</p>
+                            <h2 class="display-6 fw-bold mb-2">874+</h2>
+                            <p class="mb-0">Satisfied Clients</p>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -228,15 +228,15 @@
                     <div class="col-md-6">
                         <div
                             style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; text-align: center;">
-                            <h2 class="display-6 fw-bold mb-2">50+</h2>
-                            <p class="mb-0">Countries Served</p>
+                            <h2 class="display-6 fw-bold mb-2">12+</h2>
+                            <p class="mb-0">Countries Represented</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div
                             style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; text-align: center;">
                             <h2 class="display-6 fw-bold mb-2">10+</h2>
-                            <p class="mb-0">Years Experience</p>
+                            <p class="mb-0">Years Of Experience</p>
                         </div>
                     </div>
                 </div>
