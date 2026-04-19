@@ -694,16 +694,14 @@
 <section class="licenses-certifications section-space-b"
     style="padding-top: 60px; padding-bottom: 60px; background-color: #ffffff;">
     <div class="container">
-        <div class="row justify-content-center text-center">
-            <div class="col-lg-8">
-                <div class="sec-title" data-aos="fade-up" data-aos-duration="1000">
-                    <h2 class="sec-title__title"
-                        style="font-size: 36px; font-weight: 700; color: #1d253a; margin-bottom: 40px;">
-                        Licenses &amp; Affiliations
-                    </h2>
-                </div>
-            </div>
-        </div><!-- /.row -->
+        <div class="sec-title sec-title--center">
+            <div class="sec-title__top" data-aos="fade-down" data-aos-anchor-placement="top-bottom"
+                data-aos-duration="1500">
+                <span class="sec-title__icon sec-title__icon--left"><i class="icon-airplane"></i></span>
+                <p class="sec-title__tagline">Licenses &amp; Affiliations</p>
+                <span class="sec-title__icon sec-title__icon--right"><i class="icon-airplane-2"></i></span>
+            </div><!-- /.sec-title__top -->
+        </div><!-- /.sec-title -->
         <div class="row justify-content-center align-items-center licenses-certifications__logos-row" data-aos="fade-up"
             data-aos-duration="1200">
             <div class="col-6 col-md-auto licenses-certifications__logo-col">
