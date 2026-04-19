@@ -300,7 +300,7 @@
                         <p>That realization became my mission.</p>
 
                         <p>
-                            I am <strong>Purnima Wahi, Founder and Principal Consultant at PRK Immigration
+                            I am <strong>Purnima Wahi Anttal, Founder and Principal Consultant at PRK Immigration
                                 Consultancy</strong>,
                             and I built this firm with one clear purpose: to be a competent, ethical, and regulated
                             consultant who
