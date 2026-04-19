@@ -160,6 +160,56 @@
     .footer-office-location__link:hover {
         color: #003d8a;
     }
+
+    .floating-quick-links {
+        position: fixed;
+        right: 20px;
+        bottom: 155px;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .floating-quick-links__social {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .floating-quick-links__social a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e6e6e6;
+        background-color: var(--visanet-white, #ffffff);
+        color: var(--visanet-black3, #1d253a);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .floating-quick-links__social a:hover {
+        border-color: var(--visanet-black3, #1d253a);
+        background-color: var(--visanet-black3, #1d253a);
+        color: var(--visanet-white, #ffffff);
+    }
+
+    @media (max-width: 767px) {
+        .floating-quick-links {
+            right: 25px;
+            bottom: 145px;
+            align-items: center;
+        }
+
+        .floating-quick-links__social a {
+            width: 34px;
+            height: 34px;
+        }
+    }
 </style>
 
 <!-- mobile nav, search popup and other page-level widgets (from the original template) -->
@@ -203,6 +253,21 @@
         </form>
     </div>
 </div>
-<a href="javascript:void(0);" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-    class="scroll-to-target scroll-to-top"><span class="scroll-to-top__text">back
-        top</span><span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span></a>
+<div class="floating-quick-links">
+    @if(isset($socialLinks) && $socialLinks->count() > 0)
+    <div class="floating-quick-links__social">
+        @foreach($socialLinks as $socialLink)
+        <a href="{{ $socialLink->url }}" target="_blank" rel="noopener noreferrer"
+            aria-label="{{ $socialLink->label }}">
+            <i class="{{ $socialLink->icon_class ?? 'fab fa-link' }}"></i>
+        </a>
+        @endforeach
+    </div>
+    @endif
+
+    <a href="javascript:void(0);" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="scroll-to-target scroll-to-top">
+        <span class="scroll-to-top__text">back top</span>
+        <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
+    </a>
+</div>

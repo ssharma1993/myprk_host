@@ -41,16 +41,6 @@ $headerEmail = trim((string) config('company.email', 'info@myprk.ca'));
                     </a>
                 </div><!-- /.main-header__logo -->
             </div><!-- /.main-header__left -->
-            <div class="main-header__mobile-social">
-                @if(isset($socialLinks) && $socialLinks->count() > 0)
-                @foreach($socialLinks as $socialLink)
-                <a href="{{ $socialLink->url }}" target="_blank" rel="noopener noreferrer"
-                    aria-label="{{ $socialLink->label }}">
-                    <i class="{{ $socialLink->icon_class ?? 'fab fa-link' }}"></i>
-                </a>
-                @endforeach
-                @endif
-            </div><!-- /.main-header__mobile-social -->
             <div class="main-header__right">
                 <div class="main-header__bottom">
                     <nav class="main-header__nav main-menu">
